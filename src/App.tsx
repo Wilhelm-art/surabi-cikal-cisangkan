@@ -25,7 +25,7 @@ export default function App() {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = 80; // approximate navbar height
+      const navHeight = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navHeight;
       window.scrollTo({
@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans bg-bg-warm text-text-primary overflow-x-hidden">
-      {/* 1. NAVBAR */}
+
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -67,7 +67,7 @@ export default function App() {
             Surabi Cikal
           </div>
 
-          {/* Desktop Nav */}
+
           <div className="hidden md:flex items-center space-x-8">
             {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item, idx) => (
               <button 
@@ -90,7 +90,7 @@ export default function App() {
             </motion.a>
           </div>
 
-          {/* Mobile Toggle */}
+
           <button 
             className="md:hidden text-text-primary p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -100,7 +100,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Mobile Nav */}
+
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
@@ -133,7 +133,7 @@ export default function App() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* 2. HERO SECTION */}
+
       <section id="beranda" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
         <div className="absolute top-20 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-10 left-10 w-48 h-48 bg-secondary/15 rounded-full blur-3xl -z-10"></div>
@@ -201,7 +201,7 @@ export default function App() {
           transition={{ duration: 0.8 }}
           className="flex-1 w-full max-w-lg relative"
         >
-           {/* Decorative SVG instead of photo */}
+
            <div className="relative w-full aspect-square bg-gradient-to-br from-primary/10 to-secondary/20 rounded-[2rem] flex items-center justify-center overflow-hidden shadow-inner border border-white/50">
              <motion.div 
               animate={{ rotate: 360 }}
@@ -228,7 +228,7 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* 3. WHY CHOOSE US */}
+
       <section className="py-20 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -271,7 +271,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 4. MENU SECTION */}
+
       <section id="menu" className="py-20 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.h2 
@@ -336,7 +336,7 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* 5. TESTIMONIALS */}
+
       <section id="ulasan" className="py-20 bg-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
@@ -391,7 +391,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 6. ABOUT / STORY */}
+
       <section className="py-20 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div 
@@ -444,7 +444,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 7. LOCATION & HOURS */}
+
       <section id="lokasi" className="py-20 lg:py-32 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 bg-bg-warm rounded-[2.5rem] p-8 md:p-12 overflow-hidden relative">
@@ -527,7 +527,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 8. CTA BANNER */}
+
       <section id="hubungi-kami" className="py-12 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -564,7 +564,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 9. FOOTER */}
+
       <footer className="bg-surface border-t border-bg-warm pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-12">

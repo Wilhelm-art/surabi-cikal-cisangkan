@@ -6,7 +6,7 @@ Landing page untuk **Surabi Cikal Cisangkan** — warung surabi tradisional Sund
 
 ## Tentang Proyek
 
-Ini adalah landing page sederhana yang saya buat untuk membantu usaha surabi milik Paman Edi (Ugan Edi) agar lebih mudah ditemukan secara online. Warung ini sudah berdiri cukup lama dan punya pelanggan setia di sekitar Cisangkan, tapi belum punya kehadiran digital sama sekali.
+Ini adalah landing page sederhana yang saya buat untuk membantu usaha surabi milik Bapak Asep Saepudin agar lebih mudah ditemukan secara online. Warung ini sudah berdiri cukup lama dan punya pelanggan setia di sekitar Cisangkan, tapi belum punya kehadiran digital sama sekali.
 
 Tujuannya straightforward: tampilkan menu, lokasi, jam buka, dan nomor WhatsApp — semuanya dalam satu halaman yang cepat dimuat dan nyaman dilihat di HP.
 
@@ -59,10 +59,6 @@ Salin `.env.example` ke `.env.local`, lalu isi nilai yang diperlukan:
 ```bash
 cp .env.example .env.local
 ```
-
-| Variable | Keterangan |
-|---|---|
-| `GEMINI_API_KEY` | API key dari Google AI Studio (opsional) |
 
 ---
 

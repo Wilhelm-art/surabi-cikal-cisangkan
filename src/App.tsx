@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 const WA_LINK = "https://wa.me/6289656461483";
-const MAPS_LINK = "https://maps.app.goo.gl/search?q=Surabi+Cikal+Cisangkan+Cimahi";
+const MAPS_LINK = "https://www.google.com/maps/search/?api=1&query=Surabi+Cikal+Cisangkan+Padasuka+Cimahi";
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,6 +34,8 @@ export default function App() {
       });
     }
   };
+
+  const toSectionId = (label: string) => label.toLowerCase().replaceAll(' ', '-');
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -69,10 +71,10 @@ export default function App() {
 
 
           <div className="hidden md:flex items-center space-x-8">
-            {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item, idx) => (
+            {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item) => (
               <button 
-                key={idx}
-                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                key={item}
+                onClick={() => scrollToSection(toSectionId(item))}
                 className="text-text-secondary hover:text-primary font-medium transition-colors"
               >
                 {item}
@@ -110,10 +112,10 @@ export default function App() {
               className="md:hidden bg-surface border-t border-bg-warm overflow-hidden"
             >
               <div className="px-4 py-4 space-y-4 flex flex-col">
-                {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item, idx) => (
+                {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item) => (
                   <button 
-                    key={idx}
-                    onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                    key={item}
+                    onClick={() => scrollToSection(toSectionId(item))}
                     className="text-left py-2 text-text-primary font-medium border-b border-bg-warm border-opacity-50"
                   >
                     {item}
@@ -142,7 +144,7 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+            transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 bg-surface px-4 py-2 rounded-full border border-primary/20 shadow-sm text-sm font-medium text-text-primary mb-6"
           >
             <span className="text-secondary text-lg">⭐</span> 4.0 — Surabi Terenak di Cimahi
@@ -583,7 +585,7 @@ export default function App() {
               <ul className="space-y-3">
                 {['Beranda', 'Menu', 'Ulasan'].map((item) => (
                    <li key={item}>
-                     <button onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))} className="text-text-secondary hover:text-primary transition-colors">
+                     <button onClick={() => scrollToSection(toSectionId(item))} className="text-text-secondary hover:text-primary transition-colors">
                        {item}
                      </button>
                    </li>
@@ -609,7 +611,7 @@ export default function App() {
           </div>
           
           <div className="border-t border-bg-warm pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-secondary">
-            <p>© 2025 Surabi Cikal Cisangkan. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Surabi Cikal Cisangkan. All rights reserved.</p>
             <p>Dibuat dengan ❤️ di Cimahi</p>
           </div>
         </div>

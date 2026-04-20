@@ -4,11 +4,6 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/surabi-cikal-cisangkan/',
-  build: {
-    outDir: 'docs',
-    emptyOutDir: true,
-  },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

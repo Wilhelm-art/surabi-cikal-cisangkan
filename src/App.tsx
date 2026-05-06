@@ -23,19 +23,26 @@ export default function App() {
 
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const navHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const navHeight = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + (window.scrollY || window.pageYOffset) - navHeight;
+        
+        try {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        } catch (e) {
+          window.scrollTo(0, offsetPosition);
+        }
+      }
+    }, 10);
   };
 
-  const toSectionId = (label: string) => label.toLowerCase().replaceAll(' ', '-');
+  const toSectionId = (label: string) => label.toLowerCase().replace(/ /g, '-');
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -64,7 +71,13 @@ export default function App() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="font-display font-bold text-2xl text-primary flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <div 
+            className="font-display font-bold text-2xl text-primary flex items-center gap-2 cursor-pointer" 
+            onClick={() => {
+              try { window.scrollTo({top: 0, behavior: 'smooth'}); } 
+              catch(e) { window.scrollTo(0, 0); }
+            }}
+          >
             <Flame className="text-secondary w-6 h-6" />
             Surabi Cikal
           </div>
@@ -137,8 +150,8 @@ export default function App() {
 
 
       <section id="beranda" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-        <div className="absolute top-20 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute bottom-10 left-10 w-48 h-48 bg-secondary/15 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-20 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute bottom-10 left-10 w-48 h-48 bg-secondary/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
         
         <div className="flex-1 text-center lg:text-left relative z-10">
           <motion.div
@@ -176,21 +189,21 @@ export default function App() {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
-            <motion.a 
+            <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('menu')}
-              className="cursor-pointer bg-primary text-surface px-8 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all text-center"
+              className="cursor-pointer bg-primary text-surface px-8 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all text-center w-full sm:w-auto"
             >
               Lihat Menu
-            </motion.a>
+            </motion.button>
             <motion.a 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-surface text-primary border-2 border-primary/20 px-8 py-3.5 rounded-xl font-semibold hover:border-primary transition-all flex items-center justify-center gap-2"
+              className="bg-surface text-primary border-2 border-primary/20 px-8 py-3.5 rounded-xl font-semibold hover:border-primary transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <MessageCircle className="w-5 h-5" /> WhatsApp
             </motion.a>
@@ -486,7 +499,7 @@ export default function App() {
       <section id="lokasi" className="py-20 lg:py-32 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 bg-bg-warm rounded-[2.5rem] p-8 md:p-12 overflow-hidden relative">
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
             
             <motion.div 
                initial={{ opacity: 0, x: -30 }}
@@ -575,8 +588,8 @@ export default function App() {
              transition={{ duration: 0.6 }}
              className="bg-gradient-to-br from-primary to-[#b85b20] rounded-[2.5rem] p-10 md:p-16 text-center text-surface shadow-2xl relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl mix-blend-overlay"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/30 rounded-full blur-3xl mix-blend-overlay"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl mix-blend-overlay pointer-events-none -z-10"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/30 rounded-full blur-3xl mix-blend-overlay pointer-events-none -z-10"></div>
             
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 relative z-10">Mau Makan Surabi Sekarang?</h2>
             <p className="text-primary-50 text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90 relative z-10">

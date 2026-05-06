@@ -94,7 +94,7 @@ export default function App() {
 
 
           <button 
-            className="md:hidden text-text-primary p-2"
+            className="md:hidden text-text-primary p-2 cursor-pointer relative z-50"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -109,14 +109,14 @@ export default function App() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden bg-surface border-t border-bg-warm overflow-hidden"
+              className="md:hidden bg-surface border-t border-bg-warm overflow-hidden absolute top-full left-0 w-full shadow-lg"
             >
-              <div className="px-4 py-4 space-y-4 flex flex-col">
+              <div className="px-4 py-4 space-y-2 flex flex-col">
                 {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => scrollToSection(toSectionId(item))}
-                    className="text-left py-2 text-text-primary font-medium border-b border-bg-warm border-opacity-50"
+                    className="w-full text-left py-3 px-2 text-text-primary font-medium border-b border-bg-warm border-opacity-50 active:bg-bg-warm transition-colors rounded-md"
                   >
                     {item}
                   </button>
@@ -125,7 +125,7 @@ export default function App() {
                   href={WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary text-surface px-4 py-3 rounded-xl font-medium text-center w-full mt-2 flex items-center justify-center gap-2"
+                  className="bg-primary text-surface px-4 py-3 rounded-xl font-medium text-center w-full mt-4 flex items-center justify-center gap-2 active:bg-primary/90 transition-colors"
                 >
                   <MessageCircle className="w-5 h-5" /> Pesan Sekarang
                 </a>
@@ -140,7 +140,7 @@ export default function App() {
         <div className="absolute top-20 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-10 left-10 w-48 h-48 bg-secondary/15 rounded-full blur-3xl -z-10"></div>
         
-        <div className="flex-1 text-center lg:text-left z-10">
+        <div className="flex-1 text-center lg:text-left relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -158,7 +158,7 @@ export default function App() {
           >
             <motion.span variants={fadeInUp} className="block">Surabi Otentik Cimahi,</motion.span>
             <motion.span variants={fadeInUp} className="block text-primary">Cita Rasa Langsung</motion.span>
-            <motion.span variants={fadeInUp} className="block">dari Tungku Tradisional</motion.span>
+            <motion.span variants={fadeInUp} className="block">dari Panggangan</motion.span>
           </motion.h1>
           
           <motion.p 
@@ -167,7 +167,7 @@ export default function App() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg lg:text-xl text-text-secondary mb-10 max-w-2xl mx-auto lg:mx-0"
           >
-            Nikmati kelezatan surabi legendaris dengan resep warisan Sunda. Harga bersahabat, disajikan hangat langsung dari tungku tanah liat.
+            Nikmati kelezatan surabi legendaris dengan resep warisan Sunda. Harga bersahabat, disajikan hangat langsung dari kompor gas.
           </motion.p>
           
           <motion.div 
@@ -244,7 +244,7 @@ export default function App() {
               {
                 icon: <ChefHat className="w-8 h-8 text-primary" />,
                 title: "Resep Otentik",
-                desc: "Dibuat dengan teknik tradisional Sunda menggunakan tungku tanah liat. Menghasilkan aroma dan tekstur yang khas."
+                desc: "Dibuat dengan teknik tradisional Sunda menggunakan kompor gas. Menghasilkan kematangan merata dan tekstur yang khas."
               },
               {
                 icon: <Wallet className="w-8 h-8 text-primary" />,
@@ -291,51 +291,87 @@ export default function App() {
             transition={{ delay: 0.1 }}
             className="text-text-secondary max-w-2xl mx-auto text-lg"
           >
-            Varian lezat yang siap memanjakan lidah Anda. Cocok untuk sarapan ringan atau camilan santai.
+            Varian lezat yang siap memanjakan lidah Anda. Terbagi dalam pilihan Asin dan Manis.
           </motion.p>
         </div>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {[
-            { name: "Surabi Original", desc: "Surabi polos dengan kelapa parut dan gula merah", price: "Rp 2.000", tag: "Klasik" },
-            { name: "Surabi Oncom", desc: "Topping oncom pedas khas Sunda", price: "Rp 3.000", tag: "Favorit" },
-            { name: "Surabi Keju", desc: "Topping keju leleh gurih", price: "Rp 4.000" },
-            { name: "Surabi Coklat", desc: "Topping coklat manis untuk si kecil", price: "Rp 4.000" },
-            { name: "Surabi Kacang", desc: "Topping kacang tanah sangrai", price: "Rp 3.500" },
-            { name: "Paket Hemat 5 pcs", desc: "Pilihan 5 surabi bebas topping", price: "Rp 12.000", bg: "bg-surface border-secondary", highlight: true }
-          ].map((item, idx) => (
-            <motion.div 
-              key={idx}
-              variants={fadeInUp}
-              whileHover={{ y: -5 }}
-              className={`p-6 rounded-2xl flex flex-col justify-between h-full shadow-sm border
-                ${item.highlight ? 'bg-gradient-to-br from-surface to-secondary/10 border-secondary' : 'bg-surface border-neutral-100'}
-              `}
-            >
-              <div>
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-bold text-xl text-text-primary pr-4">{item.name}</h3>
-                  {item.tag && (
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-accent/10 text-accent whitespace-nowrap">
-                      {item.tag}
-                    </span>
-                  )}
-                </div>
-                <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-6">{item.desc}</p>
-              </div>
-              <div className="flex justify-between items-end mt-auto border-t border-dashed border-gray-200 pt-4">
-                <span className="text-sm text-text-secondary">Harga</span>
-                <span className="font-bold text-xl text-primary">{item.price}</span>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="mb-16">
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8 border-b-2 border-primary/20 pb-2 inline-block">Surabi Asin</h3>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            {[
+              { name: "Surabi Oncom", price: "Rp 2.500" },
+              { name: "Surabi Sosis", price: "Rp 5.000" },
+              { name: "Surabi Telor Polos", price: "Rp 5.000" },
+              { name: "Surabi Oncom Keju", price: "Rp 6.000" },
+              { name: "Surabi Oncom Sosis", price: "Rp 6.000" },
+              { name: "Surabi Oncom Abon", price: "Rp 6.000" },
+              { name: "Surabi Telor Oncom", price: "Rp 6.000" },
+              { name: "Surabi Telor Sosis", price: "Rp 6.000" },
+              { name: "Surabi Telor Abon", price: "Rp 6.000" },
+              { name: "Surabi Sosis Oncom", price: "Rp 6.000" },
+              { name: "Surabi Telor Keju", price: "Rp 7.000" },
+              { name: "Surabi Sosis Abon", price: "Rp 7.000" },
+              { name: "Surabi Sosis Keju", price: "Rp 7.000" },
+              { name: "Surabi Telor Oncom Keju", price: "Rp 8.000" },
+              { name: "Surabi Telor Oncom Sosis", price: "Rp 8.000" },
+              { name: "Surabi Telor Oncom Abon", price: "Rp 8.000" },
+              { name: "Surabi Telor Sosis Keju", price: "Rp 8.000" },
+              { name: "Surabi Telor Sosis Abon", price: "Rp 8.000" }
+            ].map((item, idx) => (
+              <motion.div 
+                key={`asin-${idx}`}
+                variants={fadeInUp}
+                className="flex justify-between items-center p-4 bg-surface rounded-xl border border-neutral-100 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <span className="font-semibold text-text-primary text-sm sm:text-base">{item.name}</span>
+                <span className="font-bold text-primary whitespace-nowrap ml-4">{item.price}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        <div>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8 border-b-2 border-primary/20 pb-2 inline-block">Surabi Manis</h3>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            {[
+              { name: "Surabi Kinca / Polos", price: "Rp 2.500" },
+              { name: "Surabi Coklat", price: "Rp 5.000" },
+              { name: "Surabi Keju", price: "Rp 5.000" },
+              { name: "Surabi Oreo", price: "Rp 5.000" },
+              { name: "Surabi Pisang", price: "Rp 5.000" },
+              { name: "Surabi Coklat Keju", price: "Rp 7.000" },
+              { name: "Surabi Coklat Oreo", price: "Rp 7.000" },
+              { name: "Surabi Keju Oreo", price: "Rp 7.000" },
+              { name: "Surabi Pisang Keju", price: "Rp 7.000" },
+              { name: "Surabi Pisang Coklat", price: "Rp 7.000" },
+              { name: "Surabi Pisang Oreo", price: "Rp 7.000" },
+              { name: "Surabi Coklat Oreo Keju", price: "Rp 9.000" },
+              { name: "Surabi Pisang Coklat Keju", price: "Rp 9.000" },
+              { name: "Surabi Pisang Oreo Coklat", price: "Rp 9.000" }
+            ].map((item, idx) => (
+              <motion.div 
+                key={`manis-${idx}`}
+                variants={fadeInUp}
+                className="flex justify-between items-center p-4 bg-surface rounded-xl border border-neutral-100 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <span className="font-semibold text-text-primary text-sm sm:text-base">{item.name}</span>
+                <span className="font-bold text-primary whitespace-nowrap ml-4">{item.price}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
 
@@ -403,17 +439,17 @@ export default function App() {
             transition={{ duration: 0.8 }}
             className="order-2 lg:order-1"
           >
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-text-primary mb-6">Cerita di Balik Tungku</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-text-primary mb-6">Cerita di Balik Surabi Cikal</h2>
             <div className="space-y-6 text-lg text-text-secondary">
               <p>
                 Surabi (atau serabi) adalah jajanan pasar tradisional yang mengakar kuat di budaya Sunda. Terbuat dari adonan sederhana tepung beras dan santan kelapa, rahasia kelezatannya terletak pada proses pembuatannya.
               </p>
               <p>
-                Di <strong>Surabi Cikal Cisangkan</strong>, kami menjaga tradisi tersebut dengan memasak setiap porsi di atas tungku tanah liat kecil. Panas alami dari tungku memberikan aroma 'smoky' dan tekstur renyah di pinggir, namun tetap lembut di tengah.
+                Di <strong>Surabi Cikal Cisangkan</strong>, kami meracik setiap porsi dengan hati-hati dan memanggangnya dengan kompor gas untuk kematangan yang merata. Menghasilkan tekstur renyah di pinggir, namun tetap lembut di tengah.
               </p>
               <div className="bg-gradient-to-r from-primary/10 to-transparent p-6 rounded-r-2xl border-l-4 border-primary">
                 <p className="font-medium text-text-primary">
-                  Berlokasi di dalam Toko YANTI, kami hadir setiap hari Selasa–Minggu mulai pukul 06.00 pagi. Siap menemani pagi Anda dengan sarapan yang hangat dan penuh kenangan.
+                  Berlokasi di sebelah Toko YANTI, kami hadir setiap hari mulai pukul 06.00 hingga 10.00 pagi. Siap menemani pagi Anda dengan sarapan yang hangat dan lezat.
                 </p>
               </div>
             </div>
@@ -461,7 +497,7 @@ export default function App() {
             >
               <div>
                 <h2 className="font-display text-3xl font-bold text-text-primary mb-4">Mampir ke Warung Kami</h2>
-                <p className="text-text-secondary">Berada di dalam Toko YANTI. Area yang nyaman untuk dine-in santai atau sekadar antri menunggu pesanan bungkus.</p>
+                <p className="text-text-secondary">Berada di sebelah Toko YANTI. Area yang nyaman untuk antri menunggu pesanan bungkus Anda.</p>
               </div>
 
               <div className="space-y-6">
@@ -485,8 +521,8 @@ export default function App() {
                   <div>
                     <h4 className="font-bold text-text-primary text-lg">Jam Buka</h4>
                     <p className="text-text-secondary leading-relaxed mt-1">
-                      Senin: <span className="text-red-500 font-medium">Tutup</span><br/>
-                      Selasa - Minggu: 06.00 WIB - Habis
+                      Setiap Hari (Senin - Minggu)<br/>
+                      06.00 WIB - 10.00 WIB
                     </p>
                   </div>
                 </div>
@@ -544,7 +580,7 @@ export default function App() {
             
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 relative z-10">Mau Makan Surabi Sekarang?</h2>
             <p className="text-primary-50 text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90 relative z-10">
-              Hubungi kami via WhatsApp untuk pesanan takeaway atau langsung datang ke Toko YANTI di Cimahi. Kami tunggu kedatangannya!
+              Hubungi kami via WhatsApp untuk pesanan takeaway atau langsung datang ke sebelah Toko YANTI di Cimahi. Kami tunggu kedatangannya!
             </p>
             
             <motion.a 

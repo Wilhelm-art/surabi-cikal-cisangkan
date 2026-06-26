@@ -15,7 +15,10 @@
   --font-display: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+html,
 body {
+  max-width: 100%;
+  overflow-x: hidden;
   background-color: var(--color-bg-warm);
   color: var(--color-text-primary);
   font-family: var(--font-sans);

@@ -95,14 +95,14 @@ export default function App() {
         }`}
       >
         <div className={`max-w-6xl mx-auto px-6 py-3 rounded-full flex justify-between items-center transition-all duration-300 ${
-          isScrolled ? 'bg-surface/90 backdrop-blur-lg shadow-xl border border-white/5' : 'bg-transparent border border-transparent'
+          isScrolled ? 'bg-surface/90 backdrop-blur-lg shadow-sm border border-stone-200/60' : 'bg-transparent border border-transparent'
         }`}>
           <div 
             className="font-display font-bold text-xl text-primary flex items-center gap-2 cursor-pointer active:scale-95 transition-transform" 
             onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
           >
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-              <Flame className="text-secondary w-5 h-5" />
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+              <Flame className="text-primary w-5 h-5" />
             </div>
             <span>Surabi Cikal</span>
           </div>
@@ -121,7 +121,7 @@ export default function App() {
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-primary text-white text-sm px-5 py-2 rounded-full font-semibold inline-flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/95 active:scale-[0.98] transition-all"
+              className="bg-primary text-white text-sm px-5 py-2.5 rounded-full font-semibold inline-flex items-center gap-2 shadow-md shadow-primary/10 hover:bg-primary/95 active:scale-[0.98] transition-all"
             >
               <span>Pesan Sekarang</span>
               <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
@@ -146,14 +146,14 @@ export default function App() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="md:hidden mt-2 max-w-6xl mx-auto bg-surface border border-white/5 rounded-3xl shadow-2xl p-4 overflow-hidden"
+              className="md:hidden mt-2 max-w-6xl mx-auto bg-surface border border-stone-200/60 rounded-3xl shadow-lg p-4 overflow-hidden"
             >
               <div className="flex flex-col space-y-2">
                 {['Beranda', 'Menu', 'Ulasan', 'Lokasi'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => scrollToSection(toSectionId(item))}
-                    className="w-full text-left py-3 px-4 text-text-secondary hover:text-text-primary font-medium hover:bg-white/5 rounded-xl transition-all"
+                    className="w-full text-left py-3 px-4 text-text-secondary hover:text-text-primary font-medium hover:bg-stone-50 rounded-xl transition-all"
                   >
                     {item}
                   </button>
@@ -183,7 +183,7 @@ export default function App() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 bg-surface/50 border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-semibold text-text-primary mb-6 shadow-sm"
+              className="inline-flex items-center gap-2 bg-surface border border-stone-200/80 px-3.5 py-1.5 rounded-full text-xs font-semibold text-text-primary mb-6 shadow-sm"
             >
               <Sparkles className="w-3.5 h-3.5 text-secondary animate-pulse" />
               <span>⭐ 4.0 di Google Maps — Surabi Legendaris Cimahi</span>
@@ -217,7 +217,7 @@ export default function App() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => scrollToSection('menu')}
-                className="bg-primary text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-primary/20 hover:bg-primary/95 transition-all text-center w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2"
+                className="bg-primary text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-primary/10 hover:bg-primary/95 transition-all text-center w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2"
               >
                 <span>Jelajahi Menu</span>
                 <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
@@ -230,9 +230,9 @@ export default function App() {
                 href={WA_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-surface hover:bg-surface-hover text-text-primary border border-white/10 px-8 py-3.5 rounded-full font-semibold transition-all flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm"
+                className="bg-surface hover:bg-surface-hover text-text-primary border border-stone-200/80 px-8 py-3.5 rounded-full font-semibold transition-all flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm"
               >
-                <MessageCircle className="w-5 h-5 text-secondary" />
+                <MessageCircle className="w-5 h-5 text-primary" />
                 <span>Pesan Cepat</span>
               </motion.a>
             </motion.div>
@@ -244,7 +244,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full max-w-[400px] p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden"
+              className="w-full max-w-[400px] p-2 bg-white border border-stone-200/80 rounded-[2.5rem] shadow-xl relative overflow-hidden"
             >
               <div className="aspect-[4/5] rounded-[calc(2.5rem-0.5rem)] overflow-hidden relative group">
                 <img 
@@ -252,15 +252,15 @@ export default function App() {
                   alt="Surabi Cikal Cisangkan" 
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-warm via-transparent to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60"></div>
                 
                 {/* Floating Micro-Card */}
-                <div className="absolute bottom-6 left-6 right-6 p-4 bg-surface/90 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl flex items-center justify-between">
+                <div className="absolute bottom-6 left-6 right-6 p-4 bg-surface/95 backdrop-blur-md rounded-2xl border border-stone-200/50 shadow-lg flex items-center justify-between">
                   <div>
                     <h3 className="font-display font-bold text-sm text-text-primary">Surabi Oncom Telur</h3>
                     <p className="text-xs text-text-secondary mt-0.5">Warisan Kuliner Sunda Pilihan</p>
                   </div>
-                  <div className="bg-primary/20 text-primary font-bold text-xs px-3 py-1.5 rounded-full">
+                  <div className="bg-primary/10 text-primary font-bold text-xs px-3 py-1.5 rounded-full border border-primary/20">
                     Rp 6.000
                   </div>
                 </div>
@@ -271,7 +271,7 @@ export default function App() {
       </section>
 
       {/* Highlights Bento Grid */}
-      <section className="py-24 border-t border-white/5 bg-surface/20">
+      <section className="py-24 border-t border-stone-200/60 bg-surface/40">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
@@ -281,20 +281,20 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="md:col-span-2 p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between overflow-hidden relative group min-h-[300px]"
+              className="md:col-span-2 p-2 bg-surface border border-stone-200/60 rounded-[2.5rem] shadow-sm flex flex-col justify-between overflow-hidden relative group min-h-[300px]"
             >
               <div className="absolute right-0 bottom-0 w-1/2 h-full hidden sm:block overflow-hidden rounded-r-[calc(2.5rem-0.5rem)]">
                 <img 
                   src="/surabi-3.jpg" 
                   alt="Baking traditional surabi" 
-                  className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700"
+                  className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 animate-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-surface via-transparent to-transparent"></div>
               </div>
               
               <div className="p-8 relative z-10 max-w-sm flex flex-col justify-between h-full">
                 <div>
-                  <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 border border-primary/20">
                     <ChefHat className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold font-display text-text-primary mb-3">Tungku Tradisional</h3>
@@ -314,11 +314,11 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between"
+              className="p-2 bg-surface border border-stone-200/60 rounded-[2.5rem] shadow-sm flex flex-col justify-between"
             >
               <div className="p-8 flex flex-col justify-between h-full">
                 <div>
-                  <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-12 h-12 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 border border-accent/20">
                     <Compass className="w-6 h-6 text-accent" />
                   </div>
                   <h3 className="text-xl font-bold font-display text-text-primary mb-3">Bahan Pilihan Sunda</h3>
@@ -336,11 +336,11 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between"
+              className="p-2 bg-surface border border-stone-200/60 rounded-[2.5rem] shadow-sm flex flex-col justify-between"
             >
               <div className="p-8 flex flex-col justify-between h-full">
                 <div>
-                  <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 border border-primary/20">
                     <Wallet className="w-6 h-6 text-secondary" />
                   </div>
                   <h3 className="text-xl font-bold font-display text-text-primary mb-3">Harga Merakyat</h3>
@@ -401,7 +401,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl overflow-hidden aspect-[4/3] relative flex items-center justify-center"
+              className="p-2 bg-white border border-stone-200/60 rounded-[2.5rem] shadow-md overflow-hidden aspect-[4/3] relative flex items-center justify-center"
             >
               <img 
                 src="/surabi-kinca.png" 
@@ -417,7 +417,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl overflow-hidden aspect-[4/3] relative flex items-center justify-center md:order-1 order-2"
+              className="p-2 bg-white border border-stone-200/60 rounded-[2.5rem] shadow-md overflow-hidden aspect-[4/3] relative flex items-center justify-center md:order-1 order-2"
             >
               <img 
                 src="/surabi-oncom.png" 
@@ -462,14 +462,14 @@ export default function App() {
       </section>
 
       {/* Interactive Menu Tabs */}
-      <section id="menu" className="py-24 bg-surface/20 border-t border-white/5">
+      <section id="menu" className="py-24 bg-surface/40 border-t border-stone-200/60">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-4">Daftar Menu Warung</h2>
             <p className="text-text-secondary max-w-md mx-auto text-sm sm:text-base mb-8">Pilih tipe citarasa surabi favorit Anda dari bara tungku kami.</p>
             
             {/* Tabs */}
-            <div className="inline-flex p-1.5 bg-stone-900 rounded-full border border-white/5">
+            <div className="inline-flex p-1.5 bg-stone-100 rounded-full border border-stone-200">
               <button 
                 onClick={() => setActiveTab('asin')}
                 className={`px-8 py-3 rounded-full text-sm font-semibold transition-all cursor-pointer ${
@@ -503,7 +503,7 @@ export default function App() {
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.3 }}
                   key={item.name}
-                  className="p-2 bg-white/5 border border-white/10 rounded-3xl hover:border-primary/30 transition-all flex flex-col justify-between group"
+                  className="p-2 bg-surface border border-stone-200/60 rounded-3xl hover:border-primary/30 hover:shadow-md transition-all flex flex-col justify-between group"
                 >
                   <div className="p-6">
                     <div className="flex justify-between items-start gap-4">
@@ -515,7 +515,7 @@ export default function App() {
                   
                   <div className="px-6 pb-6 flex items-center justify-between mt-4">
                     {item.tag ? (
-                      <span className="text-[10px] bg-secondary/20 text-secondary border border-secondary/20 rounded-full px-2.5 py-1 font-semibold uppercase tracking-wider">
+                      <span className="text-[10px] bg-secondary/10 text-secondary border border-secondary/20 rounded-full px-2.5 py-1 font-semibold uppercase tracking-wider">
                         {item.tag}
                       </span>
                     ) : <div />}
@@ -524,7 +524,7 @@ export default function App() {
                       href={WA_LINK} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-xs text-text-secondary group-hover:text-text-primary flex items-center gap-1.5 font-medium transition-colors cursor-pointer"
+                      className="text-xs text-text-secondary group-hover:text-text-primary flex items-center gap-1.5 font-semibold transition-colors cursor-pointer"
                     >
                       <span>Pesan</span> <ArrowRight className="w-3.5 h-3.5" />
                     </a>
@@ -537,7 +537,7 @@ export default function App() {
       </section>
 
       {/* Customer Reviews */}
-      <section id="ulasan" className="py-24 border-t border-white/5">
+      <section id="ulasan" className="py-24 border-t border-stone-200/60">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
             <div>
@@ -571,12 +571,12 @@ export default function App() {
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-1.5 bg-white/5 border border-white/10 rounded-[2rem] shadow-sm flex flex-col justify-between"
+                className="p-1.5 bg-surface border border-stone-200/60 rounded-[2rem] shadow-sm flex flex-col justify-between"
               >
                 <div className="p-8">
                   <div className="flex text-secondary mb-4">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-current' : 'text-stone-700'}`} />
+                      <Star key={i} className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-current' : 'text-stone-300'}`} />
                     ))}
                   </div>
                   <blockquote className="text-base sm:text-lg font-medium text-text-primary mb-2">“{review.quote}”</blockquote>
@@ -596,7 +596,7 @@ export default function App() {
       </section>
 
       {/* Brand Story (Legacy & Craft) */}
-      <section className="py-24 bg-surface/20 border-t border-white/5">
+      <section className="py-24 bg-surface/40 border-t border-stone-200/60">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
@@ -623,7 +623,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="w-full max-w-[400px] p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden"
+                className="w-full max-w-[400px] p-2 bg-white border border-stone-200/60 rounded-[2.5rem] shadow-xl relative overflow-hidden"
               >
                 <div className="aspect-[4/5] rounded-[calc(2.5rem-0.5rem)] overflow-hidden">
                   <img 
@@ -640,8 +640,8 @@ export default function App() {
       </section>
 
       {/* Location and Maps */}
-      <section id="lokasi" className="py-24 border-t border-white/5 max-w-6xl mx-auto px-6">
-        <div className="p-1.5 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
+      <section id="lokasi" className="py-24 border-t border-stone-200/60 max-w-6xl mx-auto px-6">
+        <div className="p-1.5 bg-white border border-stone-200/60 rounded-[2.5rem] shadow-xl overflow-hidden relative">
           <div className="absolute -right-20 -top-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
           
           <div className="grid lg:grid-cols-5 gap-12 p-8 sm:p-12 relative z-10">
@@ -653,7 +653,7 @@ export default function App() {
 
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary border border-primary/20">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -665,7 +665,7 @@ export default function App() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary border border-primary/20">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
@@ -678,12 +678,12 @@ export default function App() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary border border-primary/20">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-bold text-text-primary text-sm sm:text-base">WhatsApp / Reservasi</h4>
-                    <p className="text-text-secondary text-xs sm:text-sm mt-1 font-semibold text-secondary">
+                    <p className="text-text-secondary text-xs sm:text-sm mt-1 font-semibold text-primary">
                       0896-5646-1483
                     </p>
                   </div>
@@ -691,20 +691,20 @@ export default function App() {
               </div>
             </div>
 
-            <div className="lg:col-span-3 h-full min-h-[300px] bg-stone-900/60 rounded-3xl p-8 border border-white/5 flex flex-col justify-center items-center text-center relative overflow-hidden group">
+            <div className="lg:col-span-3 h-full min-h-[300px] bg-stone-900 rounded-3xl p-8 border border-stone-200/60 flex flex-col justify-center items-center text-center relative overflow-hidden group">
               <img 
                 src="/surabi-5.jpg" 
                 alt="Map view background" 
                 className="absolute inset-0 w-full h-full object-cover opacity-15 transform group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-stone-950/80"></div>
+              <div className="absolute inset-0 bg-stone-950/85"></div>
               
-              <div className="relative z-10 space-y-6">
-                <div className="w-16 h-16 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mx-auto text-primary">
+              <div className="relative z-10 space-y-6 text-white">
+                <div className="w-16 h-16 bg-primary/15 border border-primary/30 rounded-full flex items-center justify-center mx-auto text-primary">
                   <MapPin className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-text-primary">Petunjuk Arah Google Maps</h3>
-                <p className="text-text-secondary text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">Klik tombol di bawah ini untuk membuka lokasi warung di Google Maps.</p>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-white">Petunjuk Arah Google Maps</h3>
+                <p className="text-stone-300 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">Klik tombol di bawah ini untuk membuka lokasi warung di Google Maps.</p>
                 
                 <motion.a 
                   whileHover={{ scale: 1.02 }}
@@ -750,27 +750,27 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 bg-stone-950 py-16">
+      <footer className="border-t border-white/5 bg-stone-950 py-16 text-stone-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
             <div className="md:col-span-5 space-y-4">
               <div className="font-display font-bold text-xl text-primary flex items-center gap-2">
                 <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Flame className="text-secondary w-4 h-4" />
+                  <Flame className="text-primary w-4 h-4" />
                 </div>
-                <span>Surabi Cikal</span>
+                <span className="text-white">Surabi Cikal</span>
               </div>
-              <p className="text-text-secondary text-xs sm:text-sm leading-relaxed max-w-xs">
+              <p className="text-stone-400 text-xs sm:text-sm leading-relaxed max-w-xs">
                 Mendedikasikan rasa jajanan pasar khas Sunda tradisional yang dipanggang dari tungku kehangatan warga Cimahi.
               </p>
             </div>
             
             <div className="md:col-span-3 lg:col-start-7">
-              <h4 className="font-bold text-text-primary text-sm mb-4">Menu</h4>
+              <h4 className="font-bold text-white text-sm mb-4">Menu</h4>
               <ul className="space-y-2.5 text-xs sm:text-sm">
                 {['Beranda', 'Menu', 'Ulasan', 'Lokasi'].map((item) => (
                    <li key={item}>
-                     <button onClick={() => scrollToSection(toSectionId(item))} className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer">
+                     <button onClick={() => scrollToSection(toSectionId(item))} className="text-stone-400 hover:text-white transition-colors cursor-pointer">
                        {item}
                      </button>
                    </li>
@@ -779,8 +779,8 @@ export default function App() {
             </div>
 
             <div className="md:col-span-4">
-              <h4 className="font-bold text-text-primary text-sm mb-4">Hubungi Kami</h4>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-text-secondary">
+              <h4 className="font-bold text-white text-sm mb-4">Hubungi Kami</h4>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-stone-400">
                  <li>WhatsApp: 0896-5646-1483</li>
                  <li>Lokasi: Sebelah Toko YANTI, Cisangkan, Cimahi</li>
                  <li>Jam Buka: 06.00 - 10.00 WIB (Pagi)</li>
@@ -788,7 +788,7 @@ export default function App() {
             </div>
           </div>
           
-          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-secondary">
+          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-stone-500">
             <p>© {new Date().getFullYear()} Surabi Cikal Cisangkan. Hak Cipta Dilindungi.</p>
             <p>Dibuat dengan ❤️ di Cimahi</p>
           </div>

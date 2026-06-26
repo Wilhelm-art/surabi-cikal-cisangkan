@@ -4,12 +4,12 @@
 @theme {
   --color-primary: #E07A5F;        /* Terracotta Clay */
   --color-secondary: #E78B54;      /* Glowing Amber / Kinca */
-  --color-accent: #81B29A;         /* Pandan Green */
-  --color-bg-warm: #0B0908;        /* Deep Charcoal / Warm off-black */
-  --color-surface: #171412;        /* Dark Stone Clay */
-  --color-surface-hover: #221E1B;  /* Slightly lighter surface */
-  --color-text-primary: #F4F1DE;   /* Soft Cream / Bone */
-  --color-text-secondary: #B5AD9E; /* Muted Sand */
+  --color-accent: #5F8575;         /* Muted Sage/Pandan Green */
+  --color-bg-warm: #F9F9F6;        /* Clean Off-white Paper */
+  --color-surface: #FFFFFF;        /* Crisp White */
+  --color-surface-hover: #F1F1ED;  /* Soft Hover Surface */
+  --color-text-primary: #1C221C;   /* Deep Forest Off-black */
+  --color-text-secondary: #586058; /* Muted Sage-gray */
   
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;

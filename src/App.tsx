@@ -3,15 +3,24 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Menu, X, MapPin, Phone, Clock, 
   ChefHat, HeartHandshake, Wallet, Star,
-  MessageCircle, ExternalLink, Flame
+  MessageCircle, ExternalLink, Flame,
+  ArrowRight, Sparkles, Compass
 } from 'lucide-react';
 
 const WA_LINK = "https://wa.me/6289656461483";
 const MAPS_LINK = "https://www.google.com/maps/search/?api=1&query=Surabi+Cikal+Cisangkan+Padasuka+Cimahi";
 
+interface MenuItem {
+  name: string;
+  price: string;
+  desc?: string;
+  tag?: string;
+}
+
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'asin' | 'manis'>('asin');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,67 +37,82 @@ export default function App() {
       if (element) {
         const navHeight = 80;
         const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + (window.scrollY || window.pageYOffset) - navHeight;
+        const offsetPosition = elementPosition + window.scrollY - navHeight;
         
-        try {
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        } catch (e) {
-          window.scrollTo(0, offsetPosition);
-        }
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
     }, 10);
   };
 
   const toSectionId = (label: string) => label.toLowerCase().replace(/ /g, '-');
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
+  const menuAsin: MenuItem[] = [
+    { name: "Surabi Oncom", price: "Rp 2.500", desc: "Favorit tradisional dengan taburan oncom pedas gurih.", tag: "Terlaris" },
+    { name: "Surabi Telor Polos", price: "Rp 5.000", desc: "Adonan surabi panggang menyatu dengan telur ayam segar." },
+    { name: "Surabi Sosis", price: "Rp 5.000", desc: "Topping irisan sosis berkualitas dengan saus spesial." },
+    { name: "Surabi Oncom Keju", price: "Rp 6.000", desc: "Kombinasi oncom tradisional dengan parutan keju gurih." },
+    { name: "Surabi Oncom Sosis", price: "Rp 6.000", desc: "Perpaduan oncom khas Cimahi dan sosis panggang." },
+    { name: "Surabi Oncom Abon", price: "Rp 6.000", desc: "Oncom gurih dengan taburan abon sapi yang melimpah." },
+    { name: "Surabi Telor Oncom", price: "Rp 6.000", desc: "Double protein tradisional: telur panggang plus oncom." },
+    { name: "Surabi Telor Sosis", price: "Rp 6.000", desc: "Telur ayam dadar menyatu dengan sosis di atas tungku." },
+    { name: "Surabi Telor Abon", price: "Rp 6.000", desc: "Telur panggang lembut diselimuti gurihnya abon sapi." },
+    { name: "Surabi Telor Keju", price: "Rp 7.000", desc: "Gurihnya telur panggang menyatu dengan keju meleleh." },
+    { name: "Surabi Sosis Keju", price: "Rp 7.000", desc: "Sosis gurih dengan taburan keju cheddar panggang." },
+    { name: "Surabi Telor Oncom Keju", price: "Rp 8.000", desc: "Kombinasi lengkap telur, oncom pedas, dan keju gurih." },
+    { name: "Surabi Telor Sosis Keju", price: "Rp 8.000", desc: "Varian premium asin terfavorit dengan isian serba ada." }
+  ];
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
+  const menuManis: MenuItem[] = [
+    { name: "Surabi Kinca / Polos", price: "Rp 2.500", desc: "Surabi polos hangat disiram kuah kinca gula aren kelapa.", tag: "Favorit" },
+    { name: "Surabi Coklat", price: "Rp 5.000", desc: "Sajian manis dengan taburan meses coklat premium." },
+    { name: "Surabi Keju", price: "Rp 5.000", desc: "Parutan keju cheddar melimpah di atas surabi susu." },
+    { name: "Surabi Oreo", price: "Rp 5.000", desc: "Remahan biskuit oreo manis gurih di atas adonan hangat." },
+    { name: "Surabi Pisang", price: "Rp 5.000", desc: "Irisan pisang manis terpanggang harum di dalam adonan." },
+    { name: "Surabi Coklat Keju", price: "Rp 7.000", desc: "Perpaduan klasik meses manis dan parutan keju gurih." },
+    { name: "Surabi Coklat Oreo", price: "Rp 7.000", desc: "Sensasi coklat lumer dengan kerenyahan biskuit oreo." },
+    { name: "Surabi Keju Oreo", price: "Rp 7.000", desc: "Perpaduan gurihnya keju parut dan manisnya oreo." },
+    { name: "Surabi Pisang Keju", price: "Rp 7.000", desc: "Pisang manis panggang dengan selimut keju cheddar." },
+    { name: "Surabi Pisang Coklat", price: "Rp 7.000", desc: "Kombinasi pisang harum dan lelehan meses coklat hangat." },
+    { name: "Surabi Coklat Oreo Keju", price: "Rp 9.000", desc: "Perpaduan tiga rasa manis, gurih, dan renyah berlimpah." },
+    { name: "Surabi Pisang Coklat Keju", price: "Rp 9.000", desc: "Varian manis premium terlengkap yang paling dicari." }
+  ];
+
+  const currentMenu = activeTab === 'asin' ? menuAsin : menuManis;
 
   return (
-    <div className="min-h-screen font-sans bg-bg-warm text-text-primary overflow-x-hidden">
-
+    <div className="min-h-screen bg-bg-warm text-text-primary overflow-x-hidden selection:bg-primary selection:text-white">
+      
+      {/* Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-surface/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+          isScrolled ? 'py-3 px-4' : 'py-5 px-4'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className={`max-w-6xl mx-auto px-6 py-3 rounded-full flex justify-between items-center transition-all duration-300 ${
+          isScrolled ? 'bg-surface/90 backdrop-blur-lg shadow-xl border border-white/5' : 'bg-transparent border border-transparent'
+        }`}>
           <div 
-            className="font-display font-bold text-2xl text-primary flex items-center gap-2 cursor-pointer" 
-            onClick={() => {
-              try { window.scrollTo({top: 0, behavior: 'smooth'}); } 
-              catch(e) { window.scrollTo(0, 0); }
-            }}
+            className="font-display font-bold text-xl text-primary flex items-center gap-2 cursor-pointer active:scale-95 transition-transform" 
+            onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
           >
-            <Flame className="text-secondary w-6 h-6" />
-            Surabi Cikal
+            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+              <Flame className="text-secondary w-5 h-5" />
+            </div>
+            <span>Surabi Cikal</span>
           </div>
 
-
-          <div className="hidden md:flex items-center space-x-8">
-            {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item) => (
+          <div className="hidden md:flex items-center space-x-6">
+            {['Beranda', 'Menu', 'Ulasan', 'Lokasi'].map((item) => (
               <button 
                 key={item}
                 onClick={() => scrollToSection(toSectionId(item))}
-                className="text-text-secondary hover:text-primary font-medium transition-colors"
+                className="text-text-secondary hover:text-text-primary text-sm font-medium transition-colors"
               >
                 {item}
               </button>
@@ -97,39 +121,39 @@ export default function App() {
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-primary text-surface px-6 py-2.5 rounded-full font-medium inline-flex items-center gap-2 shadow-[0_4px_14px_0_rgba(200,103,42,0.39)] hover:bg-primary/90 transition-all"
+              className="bg-primary text-white text-sm px-5 py-2 rounded-full font-semibold inline-flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/95 active:scale-[0.98] transition-all"
             >
-              Pesan Sekarang
+              <span>Pesan Sekarang</span>
+              <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                <ArrowRight className="w-3 h-3 text-white" />
+              </div>
             </motion.a>
           </div>
 
-
           <button 
-            className="md:hidden text-text-primary p-2 cursor-pointer relative z-50"
+            className="md:hidden text-text-primary p-1 cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X /> : <Menu />}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="md:hidden bg-surface border-t border-bg-warm overflow-hidden absolute top-full left-0 w-full shadow-lg"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="md:hidden mt-2 max-w-6xl mx-auto bg-surface border border-white/5 rounded-3xl shadow-2xl p-4 overflow-hidden"
             >
-              <div className="px-4 py-4 space-y-2 flex flex-col">
-                {['Beranda', 'Menu', 'Ulasan', 'Lokasi', 'Hubungi Kami'].map((item) => (
+              <div className="flex flex-col space-y-2">
+                {['Beranda', 'Menu', 'Ulasan', 'Lokasi'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => scrollToSection(toSectionId(item))}
-                    className="w-full text-left py-3 px-2 text-text-primary font-medium border-b border-bg-warm border-opacity-50 active:bg-bg-warm transition-colors rounded-md"
+                    className="w-full text-left py-3 px-4 text-text-secondary hover:text-text-primary font-medium hover:bg-white/5 rounded-xl transition-all"
                   >
                     {item}
                   </button>
@@ -138,7 +162,7 @@ export default function App() {
                   href={WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary text-surface px-4 py-3 rounded-xl font-medium text-center w-full mt-4 flex items-center justify-center gap-2 active:bg-primary/90 transition-colors"
+                  className="bg-primary text-white py-3.5 rounded-xl font-semibold text-center w-full flex items-center justify-center gap-2 shadow-lg shadow-primary/20 mt-2"
                 >
                   <MessageCircle className="w-5 h-5" /> Pesan Sekarang
                 </a>
@@ -148,493 +172,605 @@ export default function App() {
         </AnimatePresence>
       </motion.nav>
 
-
-      <section id="beranda" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-        <div className="absolute top-20 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-        <div className="absolute bottom-10 left-10 w-48 h-48 bg-secondary/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+      {/* Hero Section */}
+      <section id="beranda" className="relative min-h-[100dvh] pt-28 pb-16 flex items-center max-w-6xl mx-auto px-6">
+        <div className="absolute top-20 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute bottom-10 left-10 w-64 h-64 bg-secondary/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
         
-        <div className="flex-1 text-center lg:text-left relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-surface px-4 py-2 rounded-full border border-primary/20 shadow-sm text-sm font-medium text-text-primary mb-6"
-          >
-            <span className="text-secondary text-lg">⭐</span> 4.0 — Surabi Terenak di Cimahi
-          </motion.div>
-          
-          <motion.h1 
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-text-primary mb-6"
-          >
-            <motion.span variants={fadeInUp} className="block">Surabi Otentik Cimahi,</motion.span>
-            <motion.span variants={fadeInUp} className="block text-primary">Cita Rasa Langsung</motion.span>
-            <motion.span variants={fadeInUp} className="block">dari Panggangan</motion.span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-lg lg:text-xl text-text-secondary mb-10 max-w-2xl mx-auto lg:mx-0"
-          >
-            Nikmati kelezatan surabi legendaris dengan resep warisan Sunda. Harga bersahabat, disajikan hangat langsung dari kompor gas.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-          >
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollToSection('menu')}
-              className="cursor-pointer bg-primary text-surface px-8 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all text-center w-full sm:w-auto"
+        <div className="grid lg:grid-cols-12 gap-12 items-center w-full">
+          <div className="lg:col-span-7 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-surface/50 border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-semibold text-text-primary mb-6 shadow-sm"
             >
-              Lihat Menu
-            </motion.button>
-            <motion.a 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href={WA_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-surface text-primary border-2 border-primary/20 px-8 py-3.5 rounded-xl font-semibold hover:border-primary transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+              <Sparkles className="w-3.5 h-3.5 text-secondary animate-pulse" />
+              <span>⭐ 4.0 di Google Maps — Surabi Legendaris Cimahi</span>
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-text-primary mb-6"
             >
-              <MessageCircle className="w-5 h-5" /> WhatsApp
-            </motion.a>
-          </motion.div>
-        </div>
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 w-full max-w-lg relative"
-        >
-
-           <div className="relative w-full aspect-square bg-gradient-to-br from-primary/10 to-secondary/20 rounded-[2rem] flex items-center justify-center overflow-hidden shadow-inner border border-white/50">
-             <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: 'radial-gradient(circle at center, var(--color-primary) 2px, transparent 2px)',
-                backgroundSize: '40px 40px'
-              }}
-             />
-             <div className="relative z-10 w-48 h-48 bg-primary rounded-full flex items-center justify-center shadow-2xl shadow-primary/30 text-surface p-10">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-md">
-                  <path d="M10 70 Q 50 100 90 70 L 85 85 Q 50 110 15 85 Z" fill="currentColor" opacity="0.8"/>
-                  <path d="M15 65 Q 50 90 85 65 C 85 45 65 30 50 30 C 35 30 15 45 15 65 Z" fill="currentColor"/>
-                  <circle cx="50" cy="55" r="15" fill="var(--color-bg-warm)" opacity="0.2"/>
-                  <circle cx="45" cy="50" r="4" fill="var(--color-bg-warm)"/>
-                  <circle cx="60" cy="58" r="3" fill="var(--color-bg-warm)"/>
-                  <circle cx="52" cy="65" r="5" fill="var(--color-bg-warm)"/>
-                  <path d="M30 40 Q 40 20 50 10 Q 60 20 70 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" opacity="0.5"/>
-                  <path d="M40 45 Q 45 25 50 15 Q 55 25 60 45" stroke="currentColor" strokeWidth="4" strokeLinecap="round" opacity="0.7"/>
-                </svg>
-             </div>
-           </div>
-        </motion.div>
-      </section>
-
-
-      <section className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {[
-              {
-                icon: <ChefHat className="w-8 h-8 text-primary" />,
-                title: "Resep Otentik",
-                desc: "Dibuat dengan teknik tradisional Sunda menggunakan kompor gas. Menghasilkan kematangan merata dan tekstur yang khas."
-              },
-              {
-                icon: <Wallet className="w-8 h-8 text-primary" />,
-                title: "Harga Terjangkau",
-                desc: "Porsi pas dengan harga yang ramah di kantong semua kalangan. Mulai dari Rp 2.000 saja per porsi."
-              },
-              {
-                icon: <HeartHandshake className="w-8 h-8 text-primary" />,
-                title: "Pelayanan Ramah",
-                desc: "Disambut langsung dengan kehangatan Paman Edi (Ugan Edi). Sensasi jajan yang bikin kangen."
-              }
-            ].map((feature, idx) => (
-              <motion.div 
-                key={idx}
-                variants={fadeInUp}
-                className="bg-bg-warm p-8 rounded-2xl border border-secondary/10 hover:shadow-md transition-shadow"
+              Cita Rasa Surabi Sunda <span className="text-primary block lg:inline">Otentik Tungku</span>
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-base sm:text-lg text-text-secondary mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+            >
+              Rasakan kelembutan adonan tepung beras dan gurihnya parutan kelapa asli yang dipanggang tradisional langsung di atas bara tungku hangat.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => scrollToSection('menu')}
+                className="bg-primary text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-primary/20 hover:bg-primary/95 transition-all text-center w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2"
               >
-                <div className="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center shadow-sm mb-6">
-                  {feature.icon}
+                <span>Jelajahi Menu</span>
+                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
-                <h3 className="text-xl font-bold font-display text-text-primary mb-3">{feature.title}</h3>
-                <p className="text-text-secondary leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-
-      <section id="menu" className="py-20 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-display text-3xl md:text-4xl font-bold text-text-primary mb-4"
-          >
-            Menu Surabi Kami
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-text-secondary max-w-2xl mx-auto text-lg"
-          >
-            Varian lezat yang siap memanjakan lidah Anda. Terbagi dalam pilihan Asin dan Manis.
-          </motion.p>
-        </div>
-
-        <div className="mb-16">
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8 border-b-2 border-primary/20 pb-2 inline-block">Surabi Asin</h3>
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {[
-              { name: "Surabi Oncom", price: "Rp 2.500" },
-              { name: "Surabi Sosis", price: "Rp 5.000" },
-              { name: "Surabi Telor Polos", price: "Rp 5.000" },
-              { name: "Surabi Oncom Keju", price: "Rp 6.000" },
-              { name: "Surabi Oncom Sosis", price: "Rp 6.000" },
-              { name: "Surabi Oncom Abon", price: "Rp 6.000" },
-              { name: "Surabi Telor Oncom", price: "Rp 6.000" },
-              { name: "Surabi Telor Sosis", price: "Rp 6.000" },
-              { name: "Surabi Telor Abon", price: "Rp 6.000" },
-              { name: "Surabi Sosis Oncom", price: "Rp 6.000" },
-              { name: "Surabi Telor Keju", price: "Rp 7.000" },
-              { name: "Surabi Sosis Abon", price: "Rp 7.000" },
-              { name: "Surabi Sosis Keju", price: "Rp 7.000" },
-              { name: "Surabi Telor Oncom Keju", price: "Rp 8.000" },
-              { name: "Surabi Telor Oncom Sosis", price: "Rp 8.000" },
-              { name: "Surabi Telor Oncom Abon", price: "Rp 8.000" },
-              { name: "Surabi Telor Sosis Keju", price: "Rp 8.000" },
-              { name: "Surabi Telor Sosis Abon", price: "Rp 8.000" }
-            ].map((item, idx) => (
-              <motion.div 
-                key={`asin-${idx}`}
-                variants={fadeInUp}
-                className="flex justify-between items-center p-4 bg-surface rounded-xl border border-neutral-100 shadow-sm hover:shadow-md transition-shadow"
+              </motion.button>
+              <motion.a 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-surface hover:bg-surface-hover text-text-primary border border-white/10 px-8 py-3.5 rounded-full font-semibold transition-all flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm"
               >
-                <span className="font-semibold text-text-primary text-sm sm:text-base">{item.name}</span>
-                <span className="font-bold text-primary whitespace-nowrap ml-4">{item.price}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+                <MessageCircle className="w-5 h-5 text-secondary" />
+                <span>Pesan Cepat</span>
+              </motion.a>
+            </motion.div>
+          </div>
 
-        <div>
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8 border-b-2 border-primary/20 pb-2 inline-block">Surabi Manis</h3>
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {[
-              { name: "Surabi Kinca / Polos", price: "Rp 2.500" },
-              { name: "Surabi Coklat", price: "Rp 5.000" },
-              { name: "Surabi Keju", price: "Rp 5.000" },
-              { name: "Surabi Oreo", price: "Rp 5.000" },
-              { name: "Surabi Pisang", price: "Rp 5.000" },
-              { name: "Surabi Coklat Keju", price: "Rp 7.000" },
-              { name: "Surabi Coklat Oreo", price: "Rp 7.000" },
-              { name: "Surabi Keju Oreo", price: "Rp 7.000" },
-              { name: "Surabi Pisang Keju", price: "Rp 7.000" },
-              { name: "Surabi Pisang Coklat", price: "Rp 7.000" },
-              { name: "Surabi Pisang Oreo", price: "Rp 7.000" },
-              { name: "Surabi Coklat Oreo Keju", price: "Rp 9.000" },
-              { name: "Surabi Pisang Coklat Keju", price: "Rp 9.000" },
-              { name: "Surabi Pisang Oreo Coklat", price: "Rp 9.000" }
-            ].map((item, idx) => (
-              <motion.div 
-                key={`manis-${idx}`}
-                variants={fadeInUp}
-                className="flex justify-between items-center p-4 bg-surface rounded-xl border border-neutral-100 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <span className="font-semibold text-text-primary text-sm sm:text-base">{item.name}</span>
-                <span className="font-bold text-primary whitespace-nowrap ml-4">{item.price}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-
-      <section id="ulasan" className="py-20 bg-primary/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-text-primary mb-4">Ulasan Pelanggan</h2>
-              <div className="flex items-center gap-2">
-                <div className="flex text-secondary">
-                  {[1,2,3,4].map(k => <Star key={k} className="w-5 h-5 fill-current" />)}
+          {/* Hero Image Card (Double-Bezel) */}
+          <div className="lg:col-span-5 flex justify-center w-full">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="w-full max-w-[400px] p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden"
+            >
+              <div className="aspect-[4/5] rounded-[calc(2.5rem-0.5rem)] overflow-hidden relative group">
+                <img 
+                  src="/surabi-1.jpg" 
+                  alt="Surabi Cikal Cisangkan" 
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-warm via-transparent to-transparent opacity-60"></div>
+                
+                {/* Floating Micro-Card */}
+                <div className="absolute bottom-6 left-6 right-6 p-4 bg-surface/90 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl flex items-center justify-between">
+                  <div>
+                    <h3 className="font-display font-bold text-sm text-text-primary">Surabi Oncom Telur</h3>
+                    <p className="text-xs text-text-secondary mt-0.5">Warisan Kuliner Sunda Pilihan</p>
+                  </div>
+                  <div className="bg-primary/20 text-primary font-bold text-xs px-3 py-1.5 rounded-full">
+                    Rp 6.000
+                  </div>
                 </div>
-                <span className="font-medium text-text-primary">4.0 / 5.0 di Google Maps</span>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights Bento Grid */}
+      <section className="py-24 border-t border-white/5 bg-surface/20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Bento Card 1 (Large - 2 columns) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="md:col-span-2 p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between overflow-hidden relative group min-h-[300px]"
+            >
+              <div className="absolute right-0 bottom-0 w-1/2 h-full hidden sm:block overflow-hidden rounded-r-[calc(2.5rem-0.5rem)]">
+                <img 
+                  src="/surabi-3.jpg" 
+                  alt="Baking traditional surabi" 
+                  className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-surface via-transparent to-transparent"></div>
+              </div>
+              
+              <div className="p-8 relative z-10 max-w-sm flex flex-col justify-between h-full">
+                <div>
+                  <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                    <ChefHat className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold font-display text-text-primary mb-3">Tungku Tradisional</h3>
+                  <p className="text-text-secondary leading-relaxed text-sm">
+                    Setiap surabi dipanggang merata di atas tungku tanah liat menggunakan kompor gas terkontrol, menjaga kelembutan bagian dalam dengan pinggiran yang tetap renyah.
+                  </p>
+                </div>
+                <div className="mt-8 text-xs font-mono text-secondary flex items-center gap-1.5">
+                  <Flame className="w-4 h-4" /> PEMBUATAN HARIAN HIGIENIS
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Bento Card 2 (Standard) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between"
+            >
+              <div className="p-8 flex flex-col justify-between h-full">
+                <div>
+                  <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center mb-6">
+                    <Compass className="w-6 h-6 text-accent" />
+                  </div>
+                  <h3 className="text-xl font-bold font-display text-text-primary mb-3">Bahan Pilihan Sunda</h3>
+                  <p className="text-text-secondary leading-relaxed text-sm">
+                    Kami menggunakan adonan murni kelapa parut matang, santan kelapa kental segar, dan tepung beras pilihan tanpa pengawet.
+                  </p>
+                </div>
+                <div className="mt-8 text-xs font-semibold text-accent">100% ALAMI & HALAL</div>
+              </div>
+            </motion.div>
+
+            {/* Bento Card 3 (Standard) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl flex flex-col justify-between"
+            >
+              <div className="p-8 flex flex-col justify-between h-full">
+                <div>
+                  <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                    <Wallet className="w-6 h-6 text-secondary" />
+                  </div>
+                  <h3 className="text-xl font-bold font-display text-text-primary mb-3">Harga Merakyat</h3>
+                  <p className="text-text-secondary leading-relaxed text-sm">
+                    Nikmati kuliner tradisi istimewa tanpa menguras dompet. Tersedia pilihan porsi hemat mulai dari harga Rp 2.500 saja.
+                  </p>
+                </div>
+                <div className="mt-8 text-xs font-semibold text-secondary">MULAI DARI RP 2.500</div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Signature Plates (Featured Mockups) */}
+      <section className="py-24 max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-4">Varian Bintang Warung Kami</h2>
+          <p className="text-text-secondary max-w-lg mx-auto text-sm sm:text-base">Dua citarasa surabi andalan dengan rasa khas yang tak tertandingi.</p>
+        </div>
+
+        <div className="space-y-16">
+          {/* Sweet Signature */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <span className="text-xs font-mono text-secondary uppercase tracking-[0.2em] font-semibold">Tungku Manis</span>
+              <h3 className="font-display text-3xl font-bold text-text-primary">Surabi Kinca Aren Asli</h3>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
+                Surabi kelapa hangat tradisional disiram dengan racikan kuah manis gurih yang terbuat dari rebusan gula aren asli murni pilihan dan daun pandan wangi segar. Nikmat disantap sebagai menu pembuka pagi.
+              </p>
+              <ul className="space-y-2.5 text-sm text-text-primary font-medium">
+                <li className="flex items-center gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                  <span>100% Gula Aren Murni Tanpa Campuran</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                  <span>Disajikan hangat langsung dari tungku</span>
+                </li>
+              </ul>
+              <motion.a 
+                whileHover={{ x: 4 }}
+                href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary font-bold text-sm"
+              >
+                <span>Pesan Surabi Kinca</span> <ArrowRight className="w-4 h-4" />
+              </motion.a>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl overflow-hidden aspect-[4/3] relative flex items-center justify-center"
+            >
+              <img 
+                src="/surabi-kinca.png" 
+                alt="Premium Surabi Kinca" 
+                className="w-full h-full object-cover rounded-[calc(2.5rem-0.5rem)] hover:scale-102 transition-transform duration-700"
+              />
+            </motion.div>
+          </div>
+
+          {/* Savory Signature */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-xl overflow-hidden aspect-[4/3] relative flex items-center justify-center md:order-1 order-2"
+            >
+              <img 
+                src="/surabi-oncom.png" 
+                alt="Premium Surabi Oncom" 
+                className="w-full h-full object-cover rounded-[calc(2.5rem-0.5rem)] hover:scale-102 transition-transform duration-700"
+              />
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6 md:order-2 order-1"
+            >
+              <span className="text-xs font-mono text-primary uppercase tracking-[0.2em] font-semibold">Tungku Asin</span>
+              <h3 className="font-display text-3xl font-bold text-text-primary">Surabi Oncom Tradisional</h3>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
+                Varian surabi legendaris warisan leluhur Sunda. Adonan surabi kelapa gurih ditaburi parutan oncom tumis pedas rempah beraroma kemangi khas Cisangkan yang dibakar perlahan hingga garing merata.
+              </p>
+              <ul className="space-y-2.5 text-sm text-text-primary font-medium">
+                <li className="flex items-center gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                  <span>Oncom pilihan dengan bumbu pedas rempah gurih</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                  <span>Harum daun kemangi panggang yang menggoda</span>
+                </li>
+              </ul>
+              <motion.a 
+                whileHover={{ x: 4 }}
+                href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-secondary font-bold text-sm"
+              >
+                <span>Pesan Surabi Oncom</span> <ArrowRight className="w-4 h-4" />
+              </motion.a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Menu Tabs */}
+      <section id="menu" className="py-24 bg-surface/20 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-4">Daftar Menu Warung</h2>
+            <p className="text-text-secondary max-w-md mx-auto text-sm sm:text-base mb-8">Pilih tipe citarasa surabi favorit Anda dari bara tungku kami.</p>
+            
+            {/* Tabs */}
+            <div className="inline-flex p-1.5 bg-stone-900 rounded-full border border-white/5">
+              <button 
+                onClick={() => setActiveTab('asin')}
+                className={`px-8 py-3 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                  activeTab === 'asin' ? 'bg-primary text-white shadow-md' : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                Surabi Asin / Gurih
+              </button>
+              <button 
+                onClick={() => setActiveTab('manis')}
+                className={`px-8 py-3 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                  activeTab === 'manis' ? 'bg-primary text-white shadow-md' : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                Surabi Manis / Legit
+              </button>
             </div>
           </div>
 
+          {/* Cards Grid */}
           <motion.div 
-             initial="hidden"
-             whileInView="visible"
-             viewport={{ once: true, margin: "-50px" }}
-             variants={staggerContainer}
-             className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
+            <AnimatePresence mode="popLayout">
+              {currentMenu.map((item, idx) => (
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                  key={item.name}
+                  className="p-2 bg-white/5 border border-white/10 rounded-3xl hover:border-primary/30 transition-all flex flex-col justify-between group"
+                >
+                  <div className="p-6">
+                    <div className="flex justify-between items-start gap-4">
+                      <h4 className="font-bold text-text-primary text-base sm:text-lg group-hover:text-primary transition-colors">{item.name}</h4>
+                      <span className="font-bold text-secondary font-mono text-sm sm:text-base whitespace-nowrap">{item.price}</span>
+                    </div>
+                    {item.desc && <p className="text-text-secondary text-xs sm:text-sm mt-2.5 leading-relaxed">{item.desc}</p>}
+                  </div>
+                  
+                  <div className="px-6 pb-6 flex items-center justify-between mt-4">
+                    {item.tag ? (
+                      <span className="text-[10px] bg-secondary/20 text-secondary border border-secondary/20 rounded-full px-2.5 py-1 font-semibold uppercase tracking-wider">
+                        {item.tag}
+                      </span>
+                    ) : <div />}
+                    
+                    <a 
+                      href={WA_LINK} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-xs text-text-secondary group-hover:text-text-primary flex items-center gap-1.5 font-medium transition-colors cursor-pointer"
+                    >
+                      <span>Pesan</span> <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Customer Reviews */}
+      <section id="ulasan" className="py-24 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-4">Ulasan Penikmat Surabi</h2>
+              <div className="flex items-center gap-2">
+                <div className="flex text-secondary">
+                  {[1,2,3,4,5].map(k => <Star key={k} className="w-4 h-4 fill-current" />)}
+                </div>
+                <span className="text-sm font-semibold text-text-primary">4.0 / 5.0 di Google Maps</span>
+              </div>
+            </div>
+            <a 
+              href={MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-bold text-sm hover:underline mt-4 md:mt-0 flex items-center gap-1.5"
+            >
+              <span>Lihat Semua Ulasan</span> <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { name: "Adit Hardiansyah", rating: 5, quote: "Makanannya murah sama enak", en: "Food is cheap and delicious" },
+              { name: "Nur Aliyah", rating: 5, quote: "Surabi terenak di cimahi 🥰", en: "The most delicious surabi in Cimahi" },
               { name: "Puji Yati", rating: 5, quote: "Trimakasih atas pelayanan nya yg sangat baik p ugan edi", en: "Thank you for the very good service from Uncle Edi" },
               { name: "sarah nabilah", rating: 4, quote: "surabinya enak dan murah di kantong", en: "The surabi is delicious and affordable" },
-              { name: "Nur Aliyah", rating: 5, quote: "Surabi terenak di cimahi 🥰", en: "The most delicious surabi in Cimahi" }
+              { name: "Adit Hardiansyah", rating: 5, quote: "Makanannya murah sama enak", en: "Food is cheap and delicious" }
             ].map((review, idx) => (
               <motion.div 
                 key={idx}
-                variants={{
-                  hidden: { opacity: 0, scale: 0.9 },
-                  visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } }
-                }}
-                className="bg-surface p-6 sm:p-8 rounded-2xl shadow-sm border border-neutral-100"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-1.5 bg-white/5 border border-white/10 rounded-[2rem] shadow-sm flex flex-col justify-between"
               >
-                <div className="flex text-secondary mb-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'fill-current' : 'text-gray-300'}`} />
-                  ))}
-                </div>
-                <blockquote className="text-lg font-medium text-text-primary mb-2">"{review.quote}"</blockquote>
-                <p className="text-sm text-text-secondary italic mb-6">"{review.en}"</p>
-                <div className="font-semibold text-text-primary flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                    {review.name.charAt(0)}
+                <div className="p-8">
+                  <div className="flex text-secondary mb-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-current' : 'text-stone-700'}`} />
+                    ))}
                   </div>
-                  {review.name}
+                  <blockquote className="text-base sm:text-lg font-medium text-text-primary mb-2">“{review.quote}”</blockquote>
+                  <p className="text-xs sm:text-sm text-text-secondary italic mb-6">“{review.en}”</p>
+                  
+                  <div className="font-semibold text-text-primary flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm border border-primary/20">
+                      {review.name.charAt(0)}
+                    </div>
+                    <span className="text-sm">{review.name}</span>
+                  </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-
-      <section className="py-20 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
-          >
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-text-primary mb-6">Cerita di Balik Surabi Cikal</h2>
-            <div className="space-y-6 text-lg text-text-secondary">
-              <p>
-                Surabi (atau serabi) adalah jajanan pasar tradisional yang mengakar kuat di budaya Sunda. Terbuat dari adonan sederhana tepung beras dan santan kelapa, rahasia kelezatannya terletak pada proses pembuatannya.
-              </p>
-              <p>
-                Di <strong>Surabi Cikal Cisangkan</strong>, kami meracik setiap porsi dengan hati-hati dan memanggangnya dengan kompor gas untuk kematangan yang merata. Menghasilkan tekstur renyah di pinggir, namun tetap lembut di tengah.
-              </p>
-              <div className="bg-gradient-to-r from-primary/10 to-transparent p-6 rounded-r-2xl border-l-4 border-primary">
-                <p className="font-medium text-text-primary">
-                  Berlokasi di sebelah Toko YANTI, kami hadir setiap hari mulai pukul 06.00 hingga 10.00 pagi. Siap menemani pagi Anda dengan sarapan yang hangat dan lezat.
+      {/* Brand Story (Legacy & Craft) */}
+      <section className="py-24 bg-surface/20 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div className="lg:col-span-7 space-y-6">
+              <span className="text-xs font-mono text-primary uppercase tracking-[0.2em] font-semibold">Kisah Kami</span>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-text-primary">Dedikasi Tradisi Paman Edi</h2>
+              <div className="space-y-4 text-text-secondary text-sm sm:text-base leading-relaxed">
+                <p>
+                  Surabi Sunda adalah warisan kuliner turun temurun yang mengajarkan kesabaran. Di warung <strong>Surabi Cikal Cisangkan</strong>, kami merawat warisan budaya ini semenjak tahun 2012.
                 </p>
+                <p>
+                  Setiap adonan dibuat secara higienis oleh Paman Edi (Ugan Edi) menggunakan racikan tepung beras pilihan berkualitas tinggi. Setiap pemesanan disajikan langsung dalam kondisi hangat dari bara tungku.
+                </p>
+                <div className="bg-primary/5 p-5 rounded-2xl border-l-2 border-primary mt-6">
+                  <p className="font-medium text-text-primary text-sm sm:text-base">
+                    Kami buka setiap pagi mulai jam 06.00 hingga 10.00 WIB. Porsi pas yang sangat tepat menemani hangatnya kopi pagi Anda di kota Cimahi.
+                  </p>
+                </div>
               </div>
             </div>
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-1 lg:order-2 flex justify-center"
-          >
-            <div className="w-full max-w-md aspect-[4/3] bg-surface rounded-[2rem] shadow-xl border border-bg-warm relative overflow-hidden flex items-center justify-center p-8">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-bl-full -z-10" />
-               <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-tr-full -z-10" />
-               <svg viewBox="0 0 200 200" className="w-full h-full text-text-primary/10" fill="currentColor">
-                 <path d="M40 160 L160 160 L140 100 Q100 80 60 100 Z" />
-                 <rect x="80" y="100" width="40" height="30" rx="10" fill="var(--color-primary)" opacity="0.8"/>
-                 <path d="M90 90 Q100 50 110 90" stroke="var(--color-primary)" strokeWidth="6" strokeLinecap="round" fill="none" className="animate-pulse"/>
-                 <path d="M75 80 Q85 40 95 80" stroke="var(--color-primary)" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.5"/>
-                 <path d="M105 80 Q115 40 125 80" stroke="var(--color-primary)" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.5"/>
-                 <circle cx="100" cy="180" r="80" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 10"/>
-               </svg>
-               <div className="absolute inset-0 flex items-center justify-center flex-col z-10 text-center">
-                 <ChefHat className="w-16 h-16 text-primary mb-4" />
-                 <h3 className="font-display font-bold text-2xl text-text-primary mb-2">Resep Turun Temurun</h3>
-                 <p className="text-text-secondary text-sm px-8">Komitmen untuk menyajikan rasa asli Sunda di setiap gigitan.</p>
-               </div>
+
+            <div className="lg:col-span-5 flex justify-center w-full">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="w-full max-w-[400px] p-2 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden"
+              >
+                <div className="aspect-[4/5] rounded-[calc(2.5rem-0.5rem)] overflow-hidden">
+                  <img 
+                    src="/surabi-4.jpg" 
+                    alt="Authentic traditional baking process" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+            
+          </div>
         </div>
       </section>
 
-
-      <section id="lokasi" className="py-20 lg:py-32 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-5 gap-12 bg-bg-warm rounded-[2.5rem] p-8 md:p-12 overflow-hidden relative">
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
-            
-            <motion.div 
-               initial={{ opacity: 0, x: -30 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6 }}
-               className="lg:col-span-2 space-y-8 relative z-10"
-            >
+      {/* Location and Maps */}
+      <section id="lokasi" className="py-24 border-t border-white/5 max-w-6xl mx-auto px-6">
+        <div className="p-1.5 bg-white/5 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
+          <div className="absolute -right-20 -top-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+          
+          <div className="grid lg:grid-cols-5 gap-12 p-8 sm:p-12 relative z-10">
+            <div className="lg:col-span-2 space-y-8">
               <div>
-                <h2 className="font-display text-3xl font-bold text-text-primary mb-4">Mampir ke Warung Kami</h2>
-                <p className="text-text-secondary">Berada di sebelah Toko YANTI. Area yang nyaman untuk antri menunggu pesanan bungkus Anda.</p>
+                <h2 className="font-display text-3xl font-bold text-text-primary mb-4">Kunjungi Warung Kami</h2>
+                <p className="text-text-secondary text-sm leading-relaxed">Kami berlokasi di area strategis Cisangkan. Nyaman untuk antrian bungkus maupun sarapan di lokasi.</p>
               </div>
 
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="mt-1 w-12 h-12 bg-surface rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
-                    <MapPin className="w-6 h-6" />
+                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                    <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-text-primary text-lg">Alamat</h4>
-                    <p className="text-text-secondary leading-relaxed mt-1">
-                      Jl. Kyai H. Usman Dhomiri, Padasuka, Kec. Cimahi Tengah, Kota Cimahi, Jawa Barat 40625<br/>
-                      <span className="text-xs font-mono mt-2 inline-block bg-white px-2 py-1 rounded">4GFJ+XP Padasuka</span>
+                    <h4 className="font-bold text-text-primary text-sm sm:text-base">Warung Surabi Cikal</h4>
+                    <p className="text-text-secondary text-xs sm:text-sm mt-1 leading-relaxed">
+                      Jl. Kyai H. Usman Dhomiri, Padasuka (Sebelah Toko YANTI), Kec. Cimahi Tengah, Kota Cimahi, Jawa Barat 40625
                     </p>
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="mt-1 w-12 h-12 bg-surface rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
-                    <Clock className="w-6 h-6" />
+                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                    <Clock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-text-primary text-lg">Jam Buka</h4>
-                    <p className="text-text-secondary leading-relaxed mt-1">
+                    <h4 className="font-bold text-text-primary text-sm sm:text-base">Jam Operasional</h4>
+                    <p className="text-text-secondary text-xs sm:text-sm mt-1">
                       Setiap Hari (Senin - Minggu)<br/>
-                      06.00 WIB - 10.00 WIB
+                      06.00 WIB - 10.00 WIB (Pagi)
                     </p>
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="mt-1 w-12 h-12 bg-surface rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
-                    <Phone className="w-6 h-6" />
+                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-primary">
+                    <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-text-primary text-lg">Telepon / Reservasi</h4>
-                    <p className="text-text-secondary leading-relaxed mt-1 font-medium">0896-5646-1483</p>
+                    <h4 className="font-bold text-text-primary text-sm sm:text-base">WhatsApp / Reservasi</h4>
+                    <p className="text-text-secondary text-xs sm:text-sm mt-1 font-semibold text-secondary">
+                      0896-5646-1483
+                    </p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div 
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.2 }}
-               className="lg:col-span-3 h-full min-h-[300px] bg-white rounded-3xl p-6 shadow-sm flex flex-col justify-center items-center text-center relative z-10 border border-neutral-100"
-            >
-              <MapPin className="w-16 h-16 text-primary/30 mb-6" />
-              <h3 className="text-2xl font-display font-bold text-text-primary mb-4">Temukan di Google Maps</h3>
-              <p className="text-text-secondary mb-8 max-w-sm">Dapatkan petunjuk arah navigasi langsung ke lokasi Surabi Cikal Cisangkan.</p>
+            <div className="lg:col-span-3 h-full min-h-[300px] bg-stone-900/60 rounded-3xl p-8 border border-white/5 flex flex-col justify-center items-center text-center relative overflow-hidden group">
+              <img 
+                src="/surabi-5.jpg" 
+                alt="Map view background" 
+                className="absolute inset-0 w-full h-full object-cover opacity-15 transform group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-stone-950/80"></div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a 
+              <div className="relative z-10 space-y-6">
+                <div className="w-16 h-16 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mx-auto text-primary">
+                  <MapPin className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-text-primary">Petunjuk Arah Google Maps</h3>
+                <p className="text-text-secondary text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">Klik tombol di bawah ini untuk membuka lokasi warung di Google Maps.</p>
+                
+                <motion.a 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   href={MAPS_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary text-surface px-8 py-3.5 rounded-xl font-semibold shadow-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
+                  className="bg-primary text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-primary/20 hover:bg-primary/95 transition-all inline-flex items-center gap-2 cursor-pointer text-sm"
                 >
-                  Buka di Google Maps <ExternalLink className="w-4 h-4" />
-                </a>
+                  <span>Buka Google Maps</span> <ExternalLink className="w-4 h-4" />
+                </motion.a>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-
-      <section id="hubungi-kami" className="py-12 sm:py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-             initial={{ opacity: 0, y: 30 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.6 }}
-             className="bg-gradient-to-br from-primary to-[#b85b20] rounded-[2.5rem] p-10 md:p-16 text-center text-surface shadow-2xl relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl mix-blend-overlay pointer-events-none -z-10"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/30 rounded-full blur-3xl mix-blend-overlay pointer-events-none -z-10"></div>
+      {/* Banner Order Call to Action */}
+      <section className="py-12 pb-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="bg-gradient-to-br from-primary to-[#b85b20] rounded-[2.5rem] p-10 md:p-14 text-center text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-secondary/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
             
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 relative z-10">Mau Makan Surabi Sekarang?</h2>
-            <p className="text-primary-50 text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90 relative z-10">
-              Hubungi kami via WhatsApp untuk pesanan takeaway atau langsung datang ke sebelah Toko YANTI di Cimahi. Kami tunggu kedatangannya!
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">Mau Nikmati Surabi Hangat Pagi Ini?</h2>
+            <p className="text-white/80 text-sm sm:text-base mb-8 max-w-xl mx-auto leading-relaxed">
+              Hubungi kami terlebih dahulu via WhatsApp untuk pemesanan takeaway dalam jumlah banyak guna menghindari antrian panjang.
             </p>
             
             <motion.a 
-              animate={{ 
-                boxShadow: ["0px 0px 0px 0px rgba(255,255,255,0.4)", "0px 0px 0px 15px rgba(255,255,255,0)", "0px 0px 0px 0px rgba(255,255,255,0)"]
-              }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-surface text-primary px-8 py-4 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all relative z-10"
+              className="inline-flex items-center gap-2 bg-white hover:bg-stone-100 text-primary px-8 py-4 rounded-full font-bold text-sm sm:text-base shadow-xl transition-all"
             >
-              <MessageCircle className="w-6 h-6" />
-              Chat WhatsApp
+              <MessageCircle className="w-5 h-5 text-secondary fill-current" />
+              <span>Chat WhatsApp Kami</span>
             </motion.a>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-
-      <footer className="bg-surface border-t border-bg-warm pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-12">
-            <div className="md:col-span-5 lg:col-span-4">
-               <div className="font-display font-bold text-2xl text-primary flex items-center gap-2 mb-4">
-                <Flame className="text-secondary w-6 h-6" />
-                Surabi Cikal
+      {/* Footer */}
+      <footer className="border-t border-white/5 bg-stone-950 py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+            <div className="md:col-span-5 space-y-4">
+              <div className="font-display font-bold text-xl text-primary flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Flame className="text-secondary w-4 h-4" />
+                </div>
+                <span>Surabi Cikal</span>
               </div>
-              <p className="text-text-secondary mb-6 max-w-sm">
-                Menyajikan surabi tradisional dengan kehangatan khas Pasundan. Jajanan lokal kualitas rasanya maksimal.
+              <p className="text-text-secondary text-xs sm:text-sm leading-relaxed max-w-xs">
+                Mendedikasikan rasa jajanan pasar khas Sunda tradisional yang dipanggang dari tungku kehangatan warga Cimahi.
               </p>
             </div>
             
-            <div className="md:col-span-3 lg:col-span-2 lg:col-start-7">
-              <h4 className="font-bold text-text-primary mb-4">Menu Cepat</h4>
-              <ul className="space-y-3">
-                {['Beranda', 'Menu', 'Ulasan'].map((item) => (
+            <div className="md:col-span-3 lg:col-start-7">
+              <h4 className="font-bold text-text-primary text-sm mb-4">Menu</h4>
+              <ul className="space-y-2.5 text-xs sm:text-sm">
+                {['Beranda', 'Menu', 'Ulasan', 'Lokasi'].map((item) => (
                    <li key={item}>
-                     <button onClick={() => scrollToSection(toSectionId(item))} className="text-text-secondary hover:text-primary transition-colors">
+                     <button onClick={() => scrollToSection(toSectionId(item))} className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer">
                        {item}
                      </button>
                    </li>
@@ -642,30 +778,23 @@ export default function App() {
               </ul>
             </div>
 
-            <div className="md:col-span-4 lg:col-span-3">
-              <h4 className="font-bold text-text-primary mb-4">Informasi</h4>
-              <ul className="space-y-3">
-                 <li>
-                   <button onClick={() => scrollToSection('lokasi')} className="text-text-secondary hover:text-primary transition-colors">
-                     Lokasi & Jam Buka
-                   </button>
-                 </li>
-                 <li>
-                   <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary transition-colors">
-                     Google Maps
-                   </a>
-                 </li>
+            <div className="md:col-span-4">
+              <h4 className="font-bold text-text-primary text-sm mb-4">Hubungi Kami</h4>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-text-secondary">
+                 <li>WhatsApp: 0896-5646-1483</li>
+                 <li>Lokasi: Sebelah Toko YANTI, Cisangkan, Cimahi</li>
+                 <li>Jam Buka: 06.00 - 10.00 WIB (Pagi)</li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-bg-warm pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-secondary">
-            <p>© {new Date().getFullYear()} Surabi Cikal Cisangkan. All rights reserved.</p>
+          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-secondary">
+            <p>© {new Date().getFullYear()} Surabi Cikal Cisangkan. Hak Cipta Dilindungi.</p>
             <p>Dibuat dengan ❤️ di Cimahi</p>
           </div>
         </div>
       </footer>
+      
     </div>
   );
 }
-

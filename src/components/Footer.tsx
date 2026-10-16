@@ -1,6 +1,7 @@
-import { Flame, QrCode } from 'lucide-react';
+import { QrCode } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/business';
 import { scrollToSection, toSectionId } from '../utils/scroll';
+import { BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   onOpenQrModal?: () => void;
@@ -18,26 +19,26 @@ export function Footer({ onOpenQrModal }: FooterProps) {
           
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
-            <div className="font-display font-bold text-xl text-primary flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
-                <Flame className="text-primary w-4 h-4" />
+            <div className="font-display font-bold text-xl text-primary flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center">
+                <BrandLogo size={24} />
               </div>
-              <span className="text-white">Surabi Cikal</span>
+              <span className="text-white">Surabi Cikal Cisangkan</span>
             </div>
             <p className="text-stone-400 text-xs sm:text-sm leading-relaxed max-w-xs">
               Mendedikasikan cita rasa jajanan pasar tradisional Sunda yang dipanggang hangat dari tungku tanah liat oleh {BUSINESS_INFO.owner} untuk warga Cimahi dan sekitarnya.
             </p>
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-600/30 text-emerald-400 text-xs font-semibold">
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-xs font-bold">
                 <span>حلال</span>
                 <span>100% Halal</span>
               </div>
               {onOpenQrModal && (
                 <button
                   onClick={onOpenQrModal}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:text-white hover:border-primary/50 text-xs font-semibold transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-200 hover:text-white hover:border-primary/50 text-xs font-semibold transition-colors cursor-pointer min-h-[44px]"
                 >
-                  <QrCode className="w-3.5 h-3.5 text-primary" />
+                  <QrCode className="w-4 h-4 text-primary" />
                   <span>Cetak Stand Meja QR</span>
                 </button>
               )}
@@ -46,13 +47,13 @@ export function Footer({ onOpenQrModal }: FooterProps) {
           
           {/* Menu Links */}
           <div className="md:col-span-3 lg:col-start-7">
-            <h4 className="font-bold text-white text-sm mb-4">Navigasi Cepat</h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <h3 className="font-bold text-white text-sm mb-4">Navigasi Cepat</h3>
+            <ul className="space-y-1 text-xs sm:text-sm">
               {FOOTER_NAV.map((item) => (
                 <li key={item}>
                   <button 
                     onClick={() => scrollToSection(toSectionId(item))} 
-                    className="text-stone-400 hover:text-white transition-colors cursor-pointer"
+                    className="text-stone-400 hover:text-white transition-colors cursor-pointer py-1.5 block min-h-[36px]"
                   >
                     {item}
                   </button>
@@ -63,21 +64,21 @@ export function Footer({ onOpenQrModal }: FooterProps) {
 
           {/* Contact Details */}
           <div className="md:col-span-4">
-            <h4 className="font-bold text-white text-sm mb-4">Kontak & Lokasi</h4>
+            <h3 className="font-bold text-white text-sm mb-4">Kontak & Lokasi</h3>
             <ul className="space-y-2.5 text-xs sm:text-sm text-stone-400">
-              <li>Pengelola: {BUSINESS_INFO.owner}</li>
+              <li>Pengelola: <strong className="text-white">{BUSINESS_INFO.owner}</strong></li>
               <li>Domain: <span className="text-primary font-mono">{BUSINESS_INFO.domainDisplay}</span></li>
-              <li>
-                WhatsApp:{" "}
+              <li className="flex flex-wrap gap-1 items-center">
+                <span>WhatsApp:</span>
                 <a 
                   href={BUSINESS_INFO.waLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline font-medium"
+                  className="text-primary hover:underline font-bold"
                 >
                   {BUSINESS_INFO.phoneDisplay}
-                </a>{" "}
-                /{" "}
+                </a>
+                <span>/</span>
                 <a 
                   href={BUSINESS_INFO.waLinkSecondary} 
                   target="_blank" 

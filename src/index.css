@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #C85A32;        /* Rich Artisan Terracotta */
-  --color-primary-hover: #B24A24;  /* Deep Terracotta */
-  --color-secondary: #D97736;      /* Gula Aren / Amber Kinca */
-  --color-accent: #3D5A4C;         /* Deep Sage Pandan */
-  --color-bg-warm: #FAF8F5;        /* Natural Warm Rice Paper */
-  --color-surface: #FFFFFF;        /* Crisp White */
-  --color-surface-hover: #F3EFEA;  /* Soft Warm Surface */
-  --color-text-primary: #1A1D1A;   /* Deep Forest Black */
-  --color-text-secondary: #4A524A; /* Accessible Charcoal Sage (WCAG AA compliant) */
+  --color-primary: #9C3312;        /* Deep Artisan Hawu Terracotta (WCAG AAA contrast 7.3:1) */
+  --color-primary-hover: #7F270B;  /* Rich Roasted Terracotta */
+  --color-secondary: #92400E;      /* Rich Caramelized Kinca Aren (WCAG AA/AAA contrast 6.2:1) */
+  --color-accent: #264635;         /* Deep Daun Pandan Sage */
+  --color-bg-warm: #FAF7F2;        /* Natural Warm Rice Paper */
+  --color-surface: #FFFFFF;        /* Crisp Pure White */
+  --color-surface-hover: #F5EFE6;  /* Soft Warm Biscuit */
+  --color-text-primary: #18181B;   /* Deep Charcoal Iron */
+  --color-text-secondary: #3F3F46; /* Accessible Deep Zinc (WCAG AAA contrast 8.5:1) */
   
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -58,7 +58,9 @@ body {
     width: 100%;
     max-width: 420px;
     margin: 0 auto;
+    border: 2px solid #9C3312 !important;
+    background: #FFFFFF !important;
     box-shadow: none !important;
-    border: 2px solid #C85A32 !important;
+    z-index: 9999;
   }
 }

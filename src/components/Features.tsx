@@ -34,12 +34,12 @@ export function Features() {
               loading="lazy"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="text-[10px] uppercase font-mono tracking-wider font-semibold text-amber-300">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-amber-300">
                 Panggang Tradisional
               </span>
-              <p className="text-xs text-stone-200 mt-0.5">
+              <p className="text-xs text-stone-200 mt-0.5 font-medium">
                 Bara arang & cetakan tanah liat alami
               </p>
             </div>
@@ -61,13 +61,13 @@ export function Features() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
             {STORE_FEATURES.map((item, idx) => (
               <div key={idx} className="flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-bg-warm flex items-center justify-center shrink-0 border border-stone-200/60 shadow-2xs">
+                <div className="w-10 h-10 rounded-xl bg-amber-50/60 flex items-center justify-center shrink-0 border border-stone-200 shadow-2xs">
                   {ICON_MAP[item.iconName]}
                 </div>
                 <div>
-                  <h4 className="font-bold text-text-primary text-sm sm:text-base">
+                  <h3 className="font-bold text-text-primary text-base">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-text-secondary text-xs leading-relaxed mt-1">
                     {item.desc}
                   </p>

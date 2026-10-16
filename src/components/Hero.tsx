@@ -1,14 +1,14 @@
 import { motion } from 'motion/react';
-import { Flame, ArrowRight, ShieldCheck, Sparkles, ChefHat } from 'lucide-react';
+import { ArrowRight, ShieldCheck, ChefHat, Sparkles } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/business';
 import { scrollToSection } from '../utils/scroll';
 import { getBusinessStatus } from '../utils/businessHours';
 
 const FLAVOR_PILLS = [
-  { label: "Kinca Gula Aren Asli", desc: "Manis legit harum pandan", tag: "Manis", color: "bg-amber-50 text-amber-900 border-amber-200" },
-  { label: "Oncom Pedas Gurih", desc: "Bumbu tumis khas Sunda", tag: "Asin", color: "bg-orange-50 text-orange-900 border-orange-200" },
-  { label: "Coklat Lumer & Keju", desc: "Favorit anak muda", tag: "Manis", color: "bg-stone-50 text-stone-900 border-stone-200" },
-  { label: "Telor Sosis Gurih", desc: "Sarapan padat protein", tag: "Asin", color: "bg-emerald-50 text-emerald-900 border-emerald-200" }
+  { label: "Kinca Gula Aren Asli", desc: "Manis legit harum pandan", tag: "Manis", color: "bg-amber-100/70 text-amber-950 border-amber-300" },
+  { label: "Oncom Pedas Gurih", desc: "Bumbu tumis khas Sunda", tag: "Asin", color: "bg-orange-100/70 text-orange-950 border-orange-300" },
+  { label: "Coklat Lumer & Keju", desc: "Favorit sarapan anak muda", tag: "Manis", color: "bg-stone-100 text-stone-900 border-stone-300" },
+  { label: "Telor Sosis Spesial", desc: "Sarapan gurih padat energi", tag: "Asin", color: "bg-emerald-100/70 text-emerald-950 border-emerald-300" }
 ];
 
 export function Hero() {
@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section id="beranda" className="relative min-h-[92dvh] pt-32 pb-20 flex items-center max-w-6xl mx-auto px-6 overflow-hidden">
       
-      {/* Ambient Warm Glow (Natural Clay Ember) */}
+      {/* Ambient Warm Culinary Glow */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-secondary/10 rounded-full blur-2xl pointer-events-none -z-10" />
 
@@ -34,25 +34,25 @@ export function Hero() {
             className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5"
           >
             {/* Live Operational Badge */}
-            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border shadow-xs transition-colors ${
+            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold border shadow-xs transition-colors ${
               status.isOpen 
-                ? 'bg-emerald-50 text-emerald-900 border-emerald-200/80' 
-                : 'bg-amber-50 text-amber-900 border-amber-200/80'
+                ? 'bg-emerald-50 text-emerald-900 border-emerald-300' 
+                : 'bg-amber-50 text-amber-950 border-amber-300'
             }`}>
-              <span className={`w-2 h-2 rounded-full ${status.isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-              <span>{status.isOpen ? "Buka Sekarang (06.00 – 10.00 WIB)" : "Buka Pukul 06.00 WIB Pagi"}</span>
+              <span className={`w-2 h-2 rounded-full ${status.isOpen ? 'bg-emerald-600 animate-pulse' : 'bg-amber-600'}`} />
+              <span>{status.isOpen ? "Buka Sekarang (06.00 – 10.00 WIB)" : "Buka Besok 06.00 WIB"}</span>
             </div>
 
             {/* Halal Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-stone-100 text-stone-800 border border-stone-200">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-stone-100 text-stone-900 border border-stone-300">
               <ShieldCheck className="w-3.5 h-3.5 text-accent" />
               <span>100% Halal</span>
             </div>
 
             {/* Artisan Tradition Badge */}
-            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-stone-100 text-stone-800 border border-stone-200">
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-stone-100 text-stone-900 border border-stone-300">
               <ChefHat className="w-3.5 h-3.5 text-primary" />
-              <span>Bakar Tungku Tradisional</span>
+              <span>Tungku Tanah Liat Asli</span>
             </div>
           </motion.div>
           
@@ -61,10 +61,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.12] text-text-primary"
+            className="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.14] text-text-primary"
           >
-            Cita Rasa Surabi Asli <br />
-            dari <span className="text-primary italic font-serif">Bara Tungku</span> Tanah Liat
+            Gurih Wangi Arang, <br />
+            Manis Legit <span className="text-primary italic font-serif">Gula Aren Asli</span>
           </motion.h1>
           
           {/* Narrative Body Copy */}
@@ -72,10 +72,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-xl mx-auto lg:mx-0"
+            className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
           >
-            Nikmati kelezatan jajanan pasar khas Sunda yang diracik dari tepung beras pilihan dan perasan santan kelapa murni, dipanggang hangat langsung setiap pagi oleh{' '}
-            <strong className="text-text-primary font-semibold">{BUSINESS_INFO.owner}</strong> di Cisangkan, Cimahi Tengah.
+            Sarapan legendaris warga Cimahi sejak pukul 06.00 WIB. Setiap porsi diaduk dari santan kelapa murni dan tepung beras pilihan, dipanggang hangat satu per satu di atas tungku tanah liat oleh <strong className="text-text-primary font-bold">{BUSINESS_INFO.owner}</strong>. Kerak bawahnya renyah garing, bagian dalamnya lembut bersarang meleleh di lidah.
           </motion.p>
           
           {/* Action CTAs */}
@@ -91,7 +90,7 @@ export function Hero() {
               href={BUSINESS_INFO.waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-primary hover:bg-primary/95 text-white px-8 py-4 rounded-full font-semibold shadow-lg shadow-primary/20 transition-all text-center flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base"
+              className="bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-primary/20 transition-all text-center flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base min-h-[48px]"
             >
               <span>Pesan via WhatsApp</span>
               <ArrowRight className="w-4 h-4" />
@@ -100,9 +99,9 @@ export function Hero() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => scrollToSection('menu')}
-              className="bg-white hover:bg-stone-50 text-text-primary border border-stone-200 px-8 py-4 rounded-full font-semibold transition-all shadow-xs cursor-pointer text-sm sm:text-base"
+              className="bg-white hover:bg-stone-50 text-text-primary border border-stone-300 px-8 py-4 rounded-full font-bold transition-all shadow-xs cursor-pointer text-sm sm:text-base min-h-[48px]"
             >
-              Lihat 32 Pilihan Menu
+              Lihat 32 Pilihan Rasa
             </motion.button>
           </motion.div>
 
@@ -111,21 +110,21 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="pt-4 flex items-center justify-center lg:justify-start gap-6 text-xs text-text-secondary border-t border-stone-200/60 max-w-md mx-auto lg:mx-0"
+            className="pt-4 flex items-center justify-center lg:justify-start gap-6 text-xs text-text-secondary border-t border-stone-200 max-w-md mx-auto lg:mx-0 font-medium"
           >
             <div>
-              <p className="font-bold text-text-primary font-mono text-sm sm:text-base">Rp 3.000</p>
-              <p className="text-[11px]">Harga Mulai</p>
+              <p className="font-bold text-text-primary font-mono text-base">Rp 3.000</p>
+              <p className="text-[11px] text-stone-600">Harga Mulai</p>
             </div>
-            <div className="w-px h-7 bg-stone-200" />
+            <div className="w-px h-7 bg-stone-300" />
             <div>
-              <p className="font-bold text-text-primary font-mono text-sm sm:text-base">32 Varian</p>
-              <p className="text-[11px]">Asin & Manis</p>
+              <p className="font-bold text-text-primary font-mono text-base">32 Varian</p>
+              <p className="text-[11px] text-stone-600">Manis & Gurih</p>
             </div>
-            <div className="w-px h-7 bg-stone-200" />
+            <div className="w-px h-7 bg-stone-300" />
             <div>
-              <p className="font-bold text-text-primary font-mono text-sm sm:text-base">4.0 ★</p>
-              <p className="text-[11px]">Google Maps</p>
+              <p className="font-bold text-text-primary font-mono text-base">Setiap Hari</p>
+              <p className="text-[11px] text-stone-600">06.00 – 10.00 WIB</p>
             </div>
           </motion.div>
 
@@ -139,30 +138,30 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative w-full max-w-[380px] aspect-square rounded-[2.5rem] p-3 bg-gradient-to-br from-amber-100/50 via-white to-orange-100/40 border border-stone-200/80 shadow-2xl overflow-hidden group"
+            className="relative w-full max-w-[380px] aspect-square rounded-[2.5rem] p-3 bg-gradient-to-br from-amber-100/60 via-white to-orange-100/50 border border-stone-300 shadow-2xl overflow-hidden group"
           >
             <div className="w-full h-full rounded-[2rem] overflow-hidden relative bg-stone-100">
               <img 
                 src="/surabi-kinca.webp" 
-                alt="Signature Surabi Kinca Gula Aren Asli" 
+                alt="Sajian Surabi Kinca Gula Aren Asli khas Bapak Asep Saepudin di Cisangkan" 
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 width={380}
                 height={380}
                 fetchPriority="high"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
               
               {/* Image Caption Overlay */}
               <div className="absolute bottom-4 left-4 right-4 text-white">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-amber-300 font-semibold">
-                  Sajian Ikonik
+                <span className="text-[10px] uppercase font-mono tracking-widest text-amber-300 font-bold">
+                  Sajian Paling Laris
                 </span>
-                <h3 className="font-display font-bold text-lg text-white">
+                <p className="font-display font-bold text-xl text-white mt-0.5">
                   Surabi Kinca Gula Aren
-                </h3>
-                <p className="text-[11px] text-stone-200">
-                  Adonan kelapa gurih disiram kuah kinca aren murni
+                </p>
+                <p className="text-xs text-stone-200 font-medium">
+                  Adonan kelapa gurih disiram kinca aren kental harum
                 </p>
               </div>
             </div>
@@ -176,15 +175,15 @@ export function Hero() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + idx * 0.1 }}
-                className={`p-3 rounded-2xl border ${pill.color} shadow-xs text-left`}
+                className={`p-3 rounded-2xl border ${pill.color} shadow-2xs text-left`}
               >
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold opacity-75">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-extrabold opacity-80">
                   {pill.tag}
                 </span>
-                <h4 className="font-bold text-xs leading-tight mt-0.5">
+                <p className="font-bold text-xs leading-tight mt-0.5 text-stone-900">
                   {pill.label}
-                </h4>
-                <p className="text-[10px] opacity-75 mt-0.5 leading-tight">
+                </p>
+                <p className="text-[10px] text-stone-700 mt-0.5 leading-tight font-medium">
                   {pill.desc}
                 </p>
               </motion.div>

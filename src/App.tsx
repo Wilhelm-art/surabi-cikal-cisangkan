@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { CartProvider } from './context/CartContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -9,8 +9,10 @@ import { SpecialBanner } from './components/SpecialBanner';
 import { ReviewsSection } from './components/ReviewsSection';
 import { LocationSection } from './components/LocationSection';
 import { Footer } from './components/Footer';
-import { FloatingCart } from './components/FloatingCart';
-import { TableQrModal } from './components/TableQrModal';
+
+// Code-split dynamic modals to reduce critical initial bundle
+const FloatingCart = lazy(() => import('./components/FloatingCart').then(m => ({ default: m.FloatingCart })));
+const TableQrModal = lazy(() => import('./components/TableQrModal').then(m => ({ default: m.TableQrModal })));
 
 export default function App() {
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
@@ -29,8 +31,13 @@ export default function App() {
           <LocationSection onOpenQrModal={() => setIsQrModalOpen(true)} />
         </main>
         <Footer onOpenQrModal={() => setIsQrModalOpen(true)} />
-        <FloatingCart />
-        <TableQrModal isOpen={isQrModalOpen} onClose={() => setIsQrModalOpen(false)} />
+        
+        <Suspense fallback={null}>
+          <FloatingCart />
+          {isQrModalOpen && (
+            <TableQrModal isOpen={isQrModalOpen} onClose={() => setIsQrModalOpen(false)} />
+          )}
+        </Suspense>
       </div>
     </CartProvider>
   );

@@ -72,12 +72,14 @@ export function PopularDishes() {
                   />
                 </div>
                 
-                {/* Rating Stars */}
-                <div className="flex text-amber-600 gap-0.5 mb-2.5" aria-label={`Rating ${dish.rating} dari 5 bintang`}>
+                {/* Rating Stars without prohibited aria on div */}
+                <div className="flex text-amber-600 gap-0.5 mb-2.5">
+                  <span className="sr-only">Rating {dish.rating} dari 5 bintang</span>
                   {Array.from({ length: 5 }).map((_, idx) => (
                     <Star 
                       key={idx} 
                       className={`w-3.5 h-3.5 ${idx < dish.rating ? 'fill-current text-amber-500' : 'text-stone-300'}`} 
+                      aria-hidden="true"
                     />
                   ))}
                 </div>

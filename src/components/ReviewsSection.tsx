@@ -18,9 +18,10 @@ export function ReviewsSection() {
               Ulasan Pelanggan
             </h2>
             <div className="flex items-center gap-2 mt-2">
-              <div className="flex text-amber-500" aria-label="Rating 5 bintang">
+              <div className="flex text-amber-500">
+                <span className="sr-only">Rating 5 bintang</span>
                 {[1, 2, 3, 4, 5].map((k) => (
-                  <Star key={k} className="w-4 h-4 fill-current" />
+                  <Star key={k} className="w-4 h-4 fill-current" aria-hidden="true" />
                 ))}
               </div>
               <span className="text-sm font-bold text-text-primary">
@@ -51,11 +52,13 @@ export function ReviewsSection() {
               className="p-1.5 bg-surface border border-stone-300 rounded-[2rem] shadow-sm flex flex-col justify-between"
             >
               <div className="p-8">
-                <div className="flex text-amber-500 mb-4" aria-label={`Rating ${review.rating} dari 5 bintang`}>
+                <div className="flex text-amber-500 mb-4">
+                  <span className="sr-only">Rating {review.rating} dari 5 bintang</span>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star 
                       key={i} 
                       className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-current text-amber-500' : 'text-stone-300'}`} 
+                      aria-hidden="true"
                     />
                   ))}
                 </div>

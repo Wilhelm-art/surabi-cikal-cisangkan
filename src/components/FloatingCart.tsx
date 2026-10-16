@@ -59,8 +59,17 @@ export function FloatingCart() {
         className="fixed bottom-6 left-0 right-0 z-40 px-4 pointer-events-none"
       >
         <div className="max-w-xl mx-auto pointer-events-auto">
-          <div className="bg-stone-900/95 backdrop-blur-md text-white p-3.5 sm:p-4 rounded-full shadow-2xl border border-stone-700/60 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 pl-2">
+          <div className="bg-stone-900/95 backdrop-blur-md text-white p-3 sm:p-4 rounded-full shadow-2xl border border-stone-700/60 flex items-center justify-between gap-3">
+            <div 
+              onClick={() => setIsOpen(true)}
+              className="flex items-center gap-3 pl-2 cursor-pointer flex-1"
+              role="button"
+              tabIndex={0}
+              aria-label="Buka rincian keranjang pesanan"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') setIsOpen(true);
+              }}
+            >
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-md">
                 <ShoppingBag className="w-5 h-5" />
               </div>
@@ -74,13 +83,23 @@ export function FloatingCart() {
               </div>
             </div>
 
-            <button
-              onClick={() => setIsOpen(true)}
-              className="bg-primary hover:bg-primary-hover active:scale-95 text-white px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-primary/20 min-h-[44px]"
-            >
-              <span>Lihat Pesanan</span>
-              <MessageCircle className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={clearCart}
+                className="p-2 text-stone-400 hover:text-red-400 transition-colors cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full hover:bg-stone-800"
+                title="Batal & kosongkan keranjang"
+                aria-label="Batal dan kosongkan keranjang"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setIsOpen(true)}
+                className="bg-primary hover:bg-primary-hover active:scale-95 text-white px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-lg shadow-primary/20 min-h-[44px]"
+              >
+                <span>Edit / Pesan</span>
+                <MessageCircle className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>

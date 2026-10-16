@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
-import { Star, Plus, ArrowRight, Check } from 'lucide-react';
+import { Star, Plus, Minus, ArrowRight } from 'lucide-react';
 import { POPULAR_DISHES } from '../data/menu';
 import { useCart } from '../context/CartContext';
 import { scrollToSection } from '../utils/scroll';
 import { MenuItem } from '../types';
 
 export function PopularDishes() {
-  const { cart, addToCart } = useCart();
+  const { cart, addToCart, updateQuantity } = useCart();
 
   const handleAdd = (dish: typeof POPULAR_DISHES[number]) => {
     const item: MenuItem = {
@@ -57,7 +57,9 @@ export function PopularDishes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="relative bg-surface rounded-[2rem] p-6 pt-16 border border-stone-300 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col items-center text-center mt-12 group"
+                className={`relative bg-surface rounded-[2rem] p-6 pt-16 border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col items-center text-center mt-12 group ${
+                  qty > 0 ? 'border-primary ring-2 ring-primary/20' : 'border-stone-300'
+                }`}
               >
                 {/* Circular image overlapping card top */}
                 <div className="absolute -top-12 w-24 h-24 rounded-full border-4 border-white shadow-lg overflow-hidden bg-bg-warm">
@@ -91,22 +93,44 @@ export function PopularDishes() {
                   {dish.desc}
                 </p>
 
-                {/* Price and Cart Add Button */}
+                {/* Price and Cart Add/Reduce Counter */}
                 <div className="flex justify-between items-center w-full border-t border-stone-200 pt-4 mt-auto">
                   <span className="font-bold text-stone-900 text-base font-mono">
                     {dish.price}
                   </span>
-                  <button 
-                    onClick={() => handleAdd(dish)}
-                    className={`min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-all cursor-pointer ${
-                      qty > 0 
-                        ? 'bg-primary text-white shadow-md' 
-                        : 'bg-primary/10 text-primary hover:bg-primary hover:text-white border border-primary/25'
-                    }`}
-                    aria-label={`Tambahkan ${dish.name} ke pesanan`}
-                  >
-                    {qty > 0 ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                  </button>
+                  
+                  {qty === 0 ? (
+                    <button 
+                      onClick={() => handleAdd(dish)}
+                      className="bg-stone-100 hover:bg-primary hover:text-white text-stone-900 border border-stone-300 hover:border-primary min-w-[44px] min-h-[44px] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-bold transition-all cursor-pointer shadow-xs"
+                      aria-label={`Tambah ${dish.name} ke pesanan`}
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>Pilih</span>
+                    </button>
+                  ) : (
+                    <div className="flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-2 py-1 min-h-[44px]">
+                      <button
+                        onClick={() => updateQuantity(dishItemId, -1)}
+                        className="w-7 h-7 rounded-full bg-white hover:bg-stone-100 text-primary flex items-center justify-center font-bold text-xs shadow-xs cursor-pointer min-w-[28px]"
+                        aria-label={`Kurangi porsi ${dish.name}`}
+                        title="Kurangi porsi"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="font-bold text-xs text-primary font-mono px-1">
+                        {qty}
+                      </span>
+                      <button
+                        onClick={() => handleAdd(dish)}
+                        className="w-7 h-7 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center font-bold text-xs shadow-xs cursor-pointer min-w-[28px]"
+                        aria-label={`Tambah porsi ${dish.name}`}
+                        title="Tambah porsi"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             );

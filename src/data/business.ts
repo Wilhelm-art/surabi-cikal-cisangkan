@@ -1,3 +1,23 @@
+const DEFAULT_ORDER_MSG = `Halo Bapak Asep (Surabi Cikal Cisangkan),
+
+Saya ingin memesan surabi hangat untuk sarapan pagi ini.
+
+Format Pesanan:
+• Nama: 
+• Pilihan Rasa: 
+• Jumlah Porsi: 
+• Metode: Ambil Sendiri / Kirim via Ojol
+
+Apakah surabinya ready sekarang? Terima kasih.`;
+
+const CATERING_ORDER_MSG = `Halo Bapak Asep (Surabi Cikal Cisangkan),
+
+Saya ingin konsultasi / memesan surabi hangat untuk pesanan rombongan (acara kantor / keluarga / hajatan).
+
+Bisa tolong infokan ketersediaan jadwal dan pilihan menunya? Terima kasih.`;
+
+const INFO_ORDER_MSG = `Halo Bapak Asep (Surabi Cikal Cisangkan), saya ingin bertanya mengenai menu surabi dan lokasi warung hari ini. Terima kasih.`;
+
 export const BUSINESS_INFO = {
   name: "Surabi Cikal Cisangkan",
   tagline: "Warung Surabi Paling Rekomended di Cimahi",
@@ -9,8 +29,10 @@ export const BUSINESS_INFO = {
   phoneSecondary: "0859-6309-8349",
   waNumber: "6289656461483",
   waNumberSecondary: "6285963098349",
-  waLink: "https://wa.me/6289656461483",
-  waLinkSecondary: "https://wa.me/6285963098349",
+  waLink: `https://wa.me/6289656461483?text=${encodeURIComponent(DEFAULT_ORDER_MSG)}`,
+  waLinkSecondary: `https://wa.me/6285963098349?text=${encodeURIComponent(DEFAULT_ORDER_MSG)}`,
+  waLinkCatering: `https://wa.me/6289656461483?text=${encodeURIComponent(CATERING_ORDER_MSG)}`,
+  waLinkInfo: `https://wa.me/6289656461483?text=${encodeURIComponent(INFO_ORDER_MSG)}`,
   domain: "https://surabi-cikal.web.id",
   domainDisplay: "surabi-cikal.web.id",
   mapsLink: "https://www.google.com/maps/search/?api=1&query=Surabi+Cikal+Cisangkan+Padasuka+Cimahi",

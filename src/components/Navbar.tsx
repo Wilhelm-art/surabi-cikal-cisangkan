@@ -13,7 +13,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const status = getBusinessStatus();
-  const { totalCount } = useCart();
+  const { totalCount, getCheckoutWhatsAppUrl } = useCart();
+  const orderUrl = totalCount > 0 ? getCheckoutWhatsAppUrl() : BUSINESS_INFO.waLink;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,7 +99,7 @@ export function Navbar() {
           )}
 
           <motion.a 
-            href={BUSINESS_INFO.waLink}
+            href={orderUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-primary text-white text-xs px-5 py-2.5 rounded-full font-bold inline-flex items-center gap-2 shadow-md shadow-primary/20 hover:bg-primary-hover active:scale-[0.98] transition-all"
@@ -157,7 +158,7 @@ export function Navbar() {
                 </button>
               ))}
               <a 
-                href={BUSINESS_INFO.waLink}
+                href={orderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-primary text-white py-3.5 rounded-xl font-bold text-center w-full flex items-center justify-center gap-2 shadow-lg shadow-primary/20 mt-2 min-h-[48px]"

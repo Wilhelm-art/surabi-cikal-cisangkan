@@ -23,7 +23,7 @@ export function SpecialBanner() {
             <motion.a 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href={BUSINESS_INFO.waLink}
+              href={BUSINESS_INFO.waLinkCatering}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-primary px-8 py-4 rounded-full font-bold text-sm sm:text-base shadow-xl transition-all cursor-pointer"

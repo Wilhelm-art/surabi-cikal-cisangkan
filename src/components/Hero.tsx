@@ -4,6 +4,8 @@ import { BUSINESS_INFO } from '../data/business';
 import { scrollToSection } from '../utils/scroll';
 import { getBusinessStatus } from '../utils/businessHours';
 
+import { useCart } from '../context/CartContext';
+
 const FLAVOR_PILLS = [
   { label: "Kinca Gula Aren Asli", desc: "Manis legit harum pandan", tag: "Manis", color: "bg-amber-100/70 text-amber-950 border-amber-300" },
   { label: "Oncom Pedas Gurih", desc: "Bumbu tumis khas Sunda", tag: "Asin", color: "bg-orange-100/70 text-orange-950 border-orange-300" },
@@ -13,6 +15,8 @@ const FLAVOR_PILLS = [
 
 export function Hero() {
   const status = getBusinessStatus();
+  const { totalCount, getCheckoutWhatsAppUrl } = useCart();
+  const orderUrl = totalCount > 0 ? getCheckoutWhatsAppUrl() : BUSINESS_INFO.waLink;
 
   return (
     <section id="beranda" className="relative min-h-[92dvh] pt-32 pb-20 flex items-center max-w-6xl mx-auto px-6 overflow-hidden">
@@ -87,7 +91,7 @@ export function Hero() {
             <motion.a 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href={BUSINESS_INFO.waLink}
+              href={orderUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-primary/20 transition-all text-center flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base min-h-[48px]"

@@ -1,0 +1,21 @@
+{
+  "name": "Surabi Cikal Cisangkan",
+  "short_name": "Surabi Cikal",
+  "description": "Warung surabi tradisional Sunda di Cimahi milik Bapak Asep Saepudin. 32 varian rasa otentik bakar tungku.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F9F9F6",
+  "theme_color": "#E07A5F",
+  "icons": [
+    {
+      "src": "/surabi-kinca.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "/surabi-kinca.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}

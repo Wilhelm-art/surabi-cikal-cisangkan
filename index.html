@@ -102,7 +102,38 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="min-height: 100vh; background-color: #FAF7F2; color: #18181B; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;">
+        <header style="padding: 1.25rem 1.5rem; max-width: 72rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 0.625rem;">
+            <img src="/logo.svg" alt="Logo Surabi Cikal" width="32" height="32" style="display: inline-block;" />
+            <span style="font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #18181B;">
+              Surabi <span style="color: #9C3312;">Cikal</span>
+            </span>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #E5E7EB; background: #FFFFFF; color: #047857;">
+            Buka Setiap Hari (06.00 – 10.00 WIB)
+          </div>
+        </header>
+        <main style="max-width: 72rem; margin: 0 auto; padding: 2rem 1.5rem;">
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <span style="font-family: monospace; font-size: 0.75rem; color: #9C3312; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">
+              Tradisi Sejak Pagi di Cisangkan
+            </span>
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; line-height: 1.15; color: #18181B; margin: 0;">
+              Gurih Wangi Arang, <br />
+              Manis Legit <span style="color: #9C3312; font-style: italic;">Gula Aren Asli</span>
+            </h1>
+            <p style="font-size: 0.95rem; color: #3F3F46; line-height: 1.6; max-width: 36rem; margin: 0; font-weight: 500;">
+              Sarapan legendaris warga Cimahi sejak pukul 06.00 WIB. Setiap porsi diaduk dari santan kelapa murni dan tepung beras pilihan, dipanggang hangat satu per satu di atas tungku tanah liat oleh Bapak Asep Saepudin.
+            </p>
+            <div style="width: 100%; max-width: 380px; aspect-ratio: 1/1; border-radius: 2rem; overflow: hidden; background: #F5EFE6; margin-top: 0.5rem;">
+              <img src="/surabi-kinca.webp" alt="Sajian Surabi Kinca Gula Aren Asli" width="380" height="380" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

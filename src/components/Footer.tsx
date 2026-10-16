@@ -89,7 +89,10 @@ export function Footer({ onOpenQrModal }: FooterProps) {
               </li>
               <li>Lokasi: {BUSINESS_INFO.landmark}</li>
               <li>Jam Buka: {BUSINESS_INFO.operatingHours.days}, {BUSINESS_INFO.operatingHours.hours}</li>
-              <li className="text-emerald-400 font-medium">✨ {BUSINESS_INFO.operatingHours.note}</li>
+              <li className="text-emerald-400 font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>{BUSINESS_INFO.operatingHours.note}</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -97,7 +100,7 @@ export function Footer({ onOpenQrModal }: FooterProps) {
         {/* Bottom Copyright */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-stone-500">
           <p>© {currentYear} {BUSINESS_INFO.name}. Hak Cipta Dilindungi.</p>
-          <p>Dibuat dengan ❤️ untuk UMKM Tradisional di Cimahi ({BUSINESS_INFO.domainDisplay})</p>
+          <p>Warung Tradisional Pasundan • Cimahi, Jawa Barat ({BUSINESS_INFO.domainDisplay})</p>
         </div>
       </div>
     </footer>

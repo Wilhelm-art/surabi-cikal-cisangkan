@@ -95,8 +95,9 @@ export function LocationSection({ onOpenQrModal }: LocationSectionProps) {
                     {BUSINESS_INFO.operatingHours.days}<br />
                     {BUSINESS_INFO.operatingHours.hours}
                   </p>
-                  <p className="text-xs text-emerald-600 font-semibold mt-1">
-                    ✨ {BUSINESS_INFO.operatingHours.note}
+                  <p className="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span>{BUSINESS_INFO.operatingHours.note}</span>
                   </p>
                 </div>
               </div>

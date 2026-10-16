@@ -1,13 +1,23 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Minus, Image as ImageIcon, X, Search } from 'lucide-react';
+import { Plus, Minus, Image as ImageIcon, X, Search, Sparkles, Flame, Heart, Award } from 'lucide-react';
 import { MENU_ASIN, MENU_MANIS } from '../data/menu';
 import { useCart } from '../context/CartContext';
 import { MenuItem } from '../types';
 
+type CuratedCollection = 'semua' | 'wajib-coba' | 'gurih-pedas' | 'manis-anak' | 'ekonomis';
 type MenuTab = 'semua' | 'asin' | 'manis';
 
+const COLLECTIONS: { id: CuratedCollection; label: string; badge: string; desc: string }[] = [
+  { id: 'semua', label: 'Semua 32 Menu', badge: '32 Varian', desc: 'Daftar lengkap rasa asin dan manis' },
+  { id: 'wajib-coba', label: 'Wajib Coba', badge: 'Signature', desc: 'Varian paling legendaris bagi pembeli baru' },
+  { id: 'gurih-pedas', label: 'Gurih & Pedas', badge: 'Nampol', desc: 'Paduan oncom gurih, telur, dan cabai segar' },
+  { id: 'manis-anak', label: 'Manis & Coklat', badge: 'Favorit', desc: 'Lumeran coklat, keju gurih, dan kinca aren' },
+  { id: 'ekonomis', label: 'Otentik Rp 3.000', badge: 'Hemat', desc: 'Sarapan otentik ramah kantong mulai Rp 3.000' }
+];
+
 export function MenuSection() {
+  const [activeCollection, setActiveCollection] = useState<CuratedCollection>('semua');
   const [activeTab, setActiveTab] = useState<MenuTab>('semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [showOriginalMenuModal, setShowOriginalMenuModal] = useState(false);
@@ -15,16 +25,44 @@ export function MenuSection() {
 
   const allMenus = useMemo(() => [...MENU_ASIN, ...MENU_MANIS], []);
 
+  const isCuratedMatch = (item: MenuItem, filter: CuratedCollection): boolean => {
+    const name = item.name.toLowerCase();
+    if (filter === 'semua') return true;
+    if (filter === 'wajib-coba') {
+      return (
+        name.includes('surabi oncom') ||
+        name.includes('kinca') ||
+        name.includes('coklat keju') ||
+        name.includes('telor oncom') ||
+        name.includes('spesial')
+      );
+    }
+    if (filter === 'gurih-pedas') {
+      return item.category === 'asin' && (name.includes('oncom') || name.includes('pedas') || name.includes('telor') || name.includes('sosis') || name.includes('abon'));
+    }
+    if (filter === 'manis-anak') {
+      return item.category === 'manis' && (name.includes('coklat') || name.includes('keju') || name.includes('oreo') || name.includes('pisang') || name.includes('strawberry'));
+    }
+    if (filter === 'ekonomis') {
+      return item.priceNum <= 6000;
+    }
+    return true;
+  };
+
   const filteredMenu = useMemo(() => {
-    let list: MenuItem[] = [];
-    if (activeTab === 'semua') {
-      list = allMenus;
-    } else if (activeTab === 'asin') {
-      list = MENU_ASIN;
-    } else {
-      list = MENU_MANIS;
+    let list = allMenus;
+
+    // Filter by curated collection first
+    list = list.filter((item) => isCuratedMatch(item, activeCollection));
+
+    // Then filter by category tab (if user specifies asin or manis)
+    if (activeTab === 'asin') {
+      list = list.filter((item) => item.category === 'asin');
+    } else if (activeTab === 'manis') {
+      list = list.filter((item) => item.category === 'manis');
     }
 
+    // Then filter by search query
     if (!searchQuery.trim()) return list;
 
     const query = searchQuery.toLowerCase().trim();
@@ -34,14 +72,14 @@ export function MenuSection() {
         (m.desc && m.desc.toLowerCase().includes(query)) ||
         (m.tag && m.tag.toLowerCase().includes(query))
     );
-  }, [activeTab, searchQuery, allMenus]);
+  }, [activeCollection, activeTab, searchQuery, allMenus]);
 
   return (
     <section id="menu" className="py-24 bg-surface/40 border-t border-stone-200/60">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-mono text-primary uppercase tracking-[0.2em] font-semibold">
             Daftar Rasa Lengkap (32 Varian Otentik)
           </span>
@@ -49,7 +87,7 @@ export function MenuSection() {
             Pilihan Menu Warung
           </h2>
           <p className="text-text-secondary text-sm sm:text-base leading-relaxed mt-2 font-medium">
-            Seluruh surabi diaduk dari santan kelapa murni dan dibakar di atas tungku tanah liat panas. Harga resmi mulai Rp 3.000.
+            Setiap surabi dibuat hangat dari santan murni dan dibakar di atas tungku tanah liat. Harga resmi mulai Rp 3.000.
           </p>
 
           {/* Quick Action: View Original Printed Menu Banner */}
@@ -64,8 +102,48 @@ export function MenuSection() {
           </div>
         </div>
 
-        {/* Search & Filter Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 max-w-4xl mx-auto">
+        {/* Rekomendasi 1: Curated Taste Collections */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-xs font-bold uppercase tracking-wider text-stone-700 font-mono">
+              Pilihan Rasa Populer (Klik untuk Panduan Cepat):
+            </p>
+          </div>
+          <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+            {COLLECTIONS.map((col) => {
+              const active = activeCollection === col.id;
+              return (
+                <button
+                  key={col.id}
+                  onClick={() => {
+                    setActiveCollection(col.id);
+                    setActiveTab('semua');
+                  }}
+                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 cursor-pointer flex flex-col items-start gap-0.5 border min-h-[48px] ${
+                    active
+                      ? 'bg-primary text-white border-primary shadow-md shadow-primary/20 scale-[1.02]'
+                      : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300 shadow-2xs'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>{col.label}</span>
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded-md font-mono ${
+                      active ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'
+                    }`}>
+                      {col.badge}
+                    </span>
+                  </div>
+                  <span className={`text-[10px] font-normal leading-none ${active ? 'text-white/85' : 'text-stone-500'}`}>
+                    {col.desc}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Search & Sub-Filter Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           
           {/* Live Search Input */}
           <div className="relative w-full sm:w-80">
@@ -88,31 +166,31 @@ export function MenuSection() {
             )}
           </div>
 
-          {/* Tab Filter Controls */}
+          {/* Sub-Filter: Semua / Asin / Manis */}
           <div className="inline-flex p-1 bg-stone-100 rounded-full border border-stone-300 w-full sm:w-auto overflow-x-auto justify-center">
             <button 
               onClick={() => setActiveTab('semua')}
-              className={`px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[44px] ${
-                activeTab === 'semua' ? 'bg-primary text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[40px] ${
+                activeTab === 'semua' ? 'bg-stone-900 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
               }`}
             >
-              Semua (32)
+              Semua Kategori
             </button>
             <button 
               onClick={() => setActiveTab('asin')}
-              className={`px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[44px] ${
-                activeTab === 'asin' ? 'bg-primary text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[40px] ${
+                activeTab === 'asin' ? 'bg-stone-900 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
               }`}
             >
-              Surabi Asin (18)
+              Gurih Asin
             </button>
             <button 
               onClick={() => setActiveTab('manis')}
-              className={`px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[44px] ${
-                activeTab === 'manis' ? 'bg-primary text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[40px] ${
+                activeTab === 'manis' ? 'bg-stone-900 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
               }`}
             >
-              Surabi Manis (14)
+              Manis Legit
             </button>
           </div>
         </div>
@@ -121,16 +199,16 @@ export function MenuSection() {
         {filteredMenu.length === 0 && (
           <div className="text-center py-16 bg-white rounded-3xl border border-stone-300 max-w-md mx-auto p-6">
             <p className="text-sm font-bold text-text-primary">
-              Menu "{searchQuery}" tidak ditemukan
+              Menu tidak ditemukan
             </p>
             <p className="text-xs text-text-secondary mt-1 font-medium">
-              Coba ketik kata kunci lain seperti <em>kinca, oncom, telur, keju, coklat</em>, atau klik tombol di bawah:
+              Coba ganti filter atau ketik kata kunci lain:
             </p>
             <button
-              onClick={() => { setSearchQuery(''); setActiveTab('semua'); }}
+              onClick={() => { setSearchQuery(''); setActiveTab('semua'); setActiveCollection('semua'); }}
               className="mt-4 px-5 py-2.5 rounded-full bg-primary text-white text-xs font-bold cursor-pointer min-h-[44px]"
             >
-              Tampilkan Semua Menu
+              Reset ke Semua 32 Menu
             </button>
           </div>
         )}

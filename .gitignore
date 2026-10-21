@@ -9,5 +9,3 @@ coverage/
 .env.*
 
 .vercel
-playwright-report/
-test-results/
